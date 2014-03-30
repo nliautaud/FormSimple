@@ -70,7 +70,7 @@ class Sendmail extends Action
                         $html .= nl2br($value) . '</p>';
                         break;
                     case 'website' :
-                        $html .= $this->html_link($value);
+                        $html .= $this->htmlLink($value);
                         break;
                     case 'checkbox' :
                     case 'select' :
@@ -89,7 +89,7 @@ class Sendmail extends Action
         // footer
         $html .= '<p><i>';
         $html .= $this->word('frompage') . ' ';
-        $html .= $this->html_link($server.$uri, $uri);
+        $html .= $this->htmlLink($server.$uri, $uri);
         $html .= '</i></p>';
 
         if(empty($name))
@@ -129,7 +129,7 @@ class Sendmail extends Action
         $this->body .= $html."\n\n";
         $this->body .= "--$mime_boundary--\n\n";
 
-        $this->targets = $this->get_emails($this->form->params(), $this->setting('default_targets'));
+        $this->targets = $this->getEmails($this->form->params(), $this->setting('default_targets'));
 
         if(empty($this->targets))
         {
@@ -163,7 +163,7 @@ class Sendmail extends Action
      * Return informations about the action.
      * @return string
      */
-    public function html_debug()
+    public function htmlDebug()
     {
         $output = 'Targets<pre>' . $this->targets . '</pre>';
         $output .= 'Base64 subject<pre>' . $this->subject . '</pre>';
@@ -177,7 +177,7 @@ class Sendmail extends Action
      * @param string|array any number of parameters
      * @return string the emails separated by commas
      */
-    private function get_emails()
+    private function getEmails()
     {
         $email_pattern =
             "`(?:(?:[a-z0-9][-.+_=']?)*[a-z0-9])+" .
@@ -204,7 +204,7 @@ class Sendmail extends Action
     * @param string $protocol http:// by default
     * @return string the <a>
     */
-    function html_link($href, $title = False, $protocol = 'http://')
+    function htmlLink($href, $title = False, $protocol = 'http://')
     {
         if(!$title) $title = $href;
         return '<a href="' . $protocol . $href . '">' . $title . '</a>';

@@ -39,9 +39,9 @@ class FormSimple
 
     public function __construct()
     {
-        FormSimple::define_constants();
+        FormSimple::defineConstants();
 
-        $this->define_id();
+        $this->defineId();
         $this->lang = FSLANG;
 
         $this->fields = array();
@@ -58,7 +58,7 @@ class FormSimple
     /*
      * Define the paths and url constants.
      */
-    private static function define_constants()
+    private static function defineConstants()
     {
         define('FSSERVER',      'http://' . $_SERVER['SERVER_NAME']);
         define('FSROOT',        $_SERVER['DOCUMENT_ROOT']);
@@ -82,7 +82,7 @@ class FormSimple
      * Define the form ID according
      * to forms count in page.
      */
-    private function define_id()
+    private function defineId()
     {
         global $FSCOUNT;
         if(!isset($FSCOUNT))
@@ -105,10 +105,10 @@ class FormSimple
         $html = '<div class="FormSimple" id="FormSimple' . $this->id . '">';
 
         // debug
-        if(FormSimple::setting('debug')) $html .= $this->html_debug();
+        if(FormSimple::setting('debug')) $html .= $this->htmlDebug();
 
 		// message
-        $html .= $this->html_message(
+        $html .= $this->htmlMessage(
 			$this->word($this->message),
 			$this->completed ? 'confirm' : 'error');
 
@@ -142,7 +142,7 @@ class FormSimple
 			// id, token and submit
 			$html .= '<div class="field submit">';
 			$html .= '<input type="hidden" name="FormSimple_form[id]" value="' . $this->id . '" />';
-			$html .= '<input type="hidden" name="FormSimple_form[token]" value="' . $this->token_get() . '" />';
+			$html .= '<input type="hidden" name="FormSimple_form[token]" value="' . $this->tokenGet() . '" />';
 			$html .= '<input type="submit" value="' . $this->word('btn_send') . '" /></div>';
 			$html .= '</form>';
 		}
@@ -155,7 +155,7 @@ class FormSimple
      * Return an html display of a message.
      * @return string the <div>
      */
-    private function html_message($message, $class = 'error')
+    private function htmlMessage($message, $class = 'error')
     {
         if(empty($message)) return '';
         $msg = '<div class="alert ' . $class . '">';
@@ -168,7 +168,7 @@ class FormSimple
      * Return an html display of a box report.
      * @return string the <div>
      */
-    private static function html_report($title, $content)
+    private static function htmlReport($title, $content)
     {
         $html = '<h4 style="color:#c33">' . $title . '</h4>';
         $html .= '<pre class="debug">' . $content . '</pre>';
@@ -178,7 +178,7 @@ class FormSimple
     /**
      * Return debug infos : SESSION, POST and FormSimple Object.
      */
-    public function html_debug()
+    public function htmlDebug()
     {
         // store debug infos
         ini_set('display_errors', 'on');
@@ -200,9 +200,9 @@ class FormSimple
         $debug = ob_get_clean();
 
         // debug layout
-        $output = FormSimple::html_report('FormSimple #' . $this->id . ' debug', $debug);
+        $output = FormSimple::htmlReport('FormSimple #' . $this->id . ' debug', $debug);
         if($this->completed)
-            $output .= FormSimple::html_report('FormSimple #' . $this->id . ' action debug', $this->action->html_debug());
+            $output .= FormSimple::htmlReport('FormSimple #' . $this->id . ' action debug', $this->action->htmlDebug());
         $output .= '<h4 style="color:#c33">FormSimple #' . $this->id . '</h4>';
 
         return $output;
@@ -227,24 +227,24 @@ class FormSimple
             $_POST['FormSimple_form']['id'] == $this->id)
         {
             // Update and check fields values
-            foreach($this->format_data($_POST['FormSimple_fields']) as $field_id => $field_post)
+            foreach($this->formatData($_POST['FormSimple_fields']) as $field_id => $field_post)
             {
                 $field = $this->field($field_id);
 
                 // Define field value or values selections
                 if(is_array($field->value()))
                 {
-                    $field->value_selection($field_post);
+                    $field->valueSelection($field_post);
                 }
                 else $field->value($field_post);
 
-                if(!$field->check_content())
+                if(!$field->checkContent())
                 {
                     $errors = True;
                 }
             }
             // Security tokens
-            if(FormSimple::setting('enable_token') && !$this->token_compare())
+            if(FormSimple::setting('enable_token') && !$this->tokenCompare())
             {
                 $this->message('form_error_token');
                 $this->visible(False);
@@ -272,7 +272,7 @@ class FormSimple
                     $this->action->exec();
                 }
             }
-            $this->token_set();
+            $this->tokenSet();
         }
     }
 
@@ -304,7 +304,7 @@ class FormSimple
 	 *
      * @return array
      */
-    public static function actions_list()
+    public static function actionsList()
     {
         $actions = array();
         if($handle = opendir(FSACTIONSPATH))
@@ -419,7 +419,7 @@ class FormSimple
     /*
      * Create an unique hash in SESSION.
      */
-    private function token_set()
+    private function tokenSet()
     {
         $_SESSION['FormSimple_token'] = uniqid(md5(microtime()), True);
     }
@@ -428,10 +428,10 @@ class FormSimple
 	 *
      * @return string
      */
-    private function token_get()
+    private function tokenGet()
     {
         if(!isset($_SESSION['FormSimple_token']))
-            $this->token_set();
+            $this->tokenSet();
         return $_SESSION['FormSimple_token'];
     }
     /*
@@ -439,10 +439,10 @@ class FormSimple
 	 *
      * @return boolean
      */
-    private function token_compare()
+    private function tokenCompare()
     {
         if(isset($_POST['FormSimple_form']['token'])
-        && $this->token_get() === $_POST['FormSimple_form']['token'])
+        && $this->tokenGet() === $_POST['FormSimple_form']['token'])
             return True;
         else return False;
     }
@@ -460,11 +460,11 @@ class FormSimple
      * @param mixed $data
      * @return mixed data
      */
-    private function format_data($data)
+    private function formatData($data)
     {
         if(is_array($data))
             foreach($data as $key => $val)
-                $data[$key] = $this->format_data($val);
+                $data[$key] = $this->formatData($val);
         else {
             $data = stripslashes($data);
             $data = htmlentities($data, ENT_QUOTES, 'UTF-8');
@@ -491,7 +491,7 @@ class FormSimple
      * @param boolean $include include class if possible
      * @return boolean
      */
-    public static function is_field_class($className, $include = False)
+    public static function isFieldClass($className, $include = False)
     {
         $file = FSFIELDSPATH . $className . '.php';
         if($include && file_exists($file)) require_once $file;
@@ -531,7 +531,7 @@ class FormSimple
             // create form
             $form = new FormSimple();
             $form->action($tag[1]);
-            $form->parse_parameters(isset($tag[2]) ? $tag[2] : '');
+            $form->parseParameters(isset($tag[2]) ? $tag[2] : '');
 
             // check POST
             $form->post();
@@ -550,7 +550,7 @@ class FormSimple
      * @param string $separator the separator, a comma by default
 	 * @return boolean the parsing status
      */
-    public function parse_parameters($parameters, $separator = ',')
+    public function parseParameters($parameters, $separator = ',')
     {
 		if($parameters === Null) return False;
 
@@ -571,9 +571,9 @@ class FormSimple
         $fieldsnbr = 0;
         foreach($parameters as $p)
         {
-            if(!FormSimple::is_field_class($p[1], True))
+            if(!FormSimple::isFieldClass($p[1], True))
             {
-                $this->add_param($p[1]);
+                $this->addParam($p[1]);
             }
             else $fieldsnbr++;
         }
@@ -581,18 +581,18 @@ class FormSimple
         if($fieldsnbr == 0 && $this->action != Null)
         {
             $default = $this->action->setting('default_params');
-            $this->parse_parameters($default);
+            $this->parseParameters($default);
         }
         // create and add fields
         $id = 0;
         foreach($parameters as $p)
         {
             $class = $p[1];
-            if(FormSimple::is_field_class($class, True))
+            if(FormSimple::isFieldClass($class, True))
             {
                 $field = new $class($id);
                 $field->construct($p[2], $p[3], $p[4], $p[5]);
-                $this->add_field($field);
+                $this->addField($field);
                 $id++;
             }
         }
@@ -609,7 +609,7 @@ class FormSimple
 	 *
      * @return string
      */
-    public static function last_version()
+    public static function lastVersion()
     {
         $apiback = file_get_contents(FSVERSIONURL);
         $response = json_decode($apiback);
@@ -621,10 +621,10 @@ class FormSimple
 	 *
      * @return mixed new version number if exists, or False.
      */
-    public static function exists_new_version()
+    public static function existsNewVersion()
     {
         $actual = explode('.', FormSimple::version());
-        $last = FormSimple::last_version();
+        $last = FormSimple::lastVersion();
         $last_r = explode('.', $last);
         foreach($actual as $key => $val)
 		{
@@ -650,7 +650,7 @@ class FormSimple
     public static function setting($key)
     {
 		if(!defined('FSCONFIGPATH'))
-			FormSimple::define_constants();
+			FormSimple::defineConstants();
 
         global $FormSimple_settings;
         require_once FSCONFIGPATH;
@@ -666,7 +666,7 @@ class FormSimple
      */
     public static function config()
     {
-        FormSimple::define_constants();
+        FormSimple::defineConstants();
 
         $head = '';
         if(!file_exists(FSCONFIGPATH))
@@ -679,7 +679,7 @@ class FormSimple
         $head .= '<h2>' . FormSimple::sword('config_title') . '</h2>';
 
         // Update
-        if($newversion = FormSimple::exists_new_version())
+        if($newversion = FormSimple::existsNewVersion())
         {
             $head .= '<div class="updated">' . FormSimple::sword('update_alert');
             $head .= '<br /><a href="' . FSDOWNURL . '">';
@@ -691,12 +691,12 @@ class FormSimple
 
 
         // Main settings
-        $forms = FormSimple::config_form();
+        $forms = FormSimple::configForm();
         $toc = '<li><a href="#FormSimple">FormSimple</a></li>';
         // Actions settings
-        foreach(FormSimple::actions_list() as $action)
+        foreach(FormSimple::actionsList() as $action)
         {
-            $form = FormSimple::config_form($action);
+            $form = FormSimple::configForm($action);
             if(!empty($form))
             {
                 $forms .= $form;
@@ -717,7 +717,7 @@ class FormSimple
      * @param string $action an action name. FormSimple config by default.
      * @return string the form
      */
-    private static function config_form($action = '')
+    private static function configForm($action = '')
     {
         if(!empty($action))
         {
@@ -741,7 +741,7 @@ class FormSimple
 
         if(isset($_POST[$name]))
         {
-            if(FormSimple::config_edit($file, $name, $$name, $_POST[$name]))
+            if(FormSimple::configEdit($file, $name, $$name, $_POST[$name]))
             {
                 $html .= '<div class="updated">';
                 $html .= FormSimple::sword('config_updated');
@@ -762,7 +762,7 @@ class FormSimple
         foreach($$name as $setting => $value)
         {
             $html .= '<div style="margin:10px 0;">';
-            $html .= FormSimple::config_field($name, $setting, $value);
+            $html .= FormSimple::configField($name, $setting, $value);
             $html .= '</div>';
         }
         $html .= '<input type="submit" class="submit" value="' . FormSimple::sword('btn_save') . '" />';
@@ -781,7 +781,7 @@ class FormSimple
      * @param mixed $value the setting valuele
      * @return string the field
      */
-    private static function config_field($name, $setting, $value)
+    private static function configField($name, $setting, $value)
     {
         if(is_bool($value))
         {
@@ -833,7 +833,7 @@ class FormSimple
      * @param array $new_values the new values to write
      * @return boolean file edition sucess
      */
-    private static function config_edit($file_path, $name, $old_values, $new_values)
+    private static function configEdit($file_path, $name, $old_values, $new_values)
     {
         if(file_exists($file_path))
         {
@@ -900,16 +900,16 @@ class FormSimple
     {
         return $this->fields[$id];
     }
-    public function add_field(Field $field)
+    public function addField(Field $field)
     {
         $field->lang($this->lang);
         $this->fields[] = $field;
     }
-    public function del_field(int $id)
+    public function delField(int $id)
     {
         unset($this->fields[$id]);
     }
-    public function del_fields()
+    public function delFields()
     {
 		$this->fields = array();
     }
@@ -919,7 +919,7 @@ class FormSimple
     {
         return $this->params;
     }
-    public function add_param($str)
+    public function addParam($str)
     {
         if(is_string($str)) $this->params[] = $str;
     }
@@ -956,7 +956,7 @@ class FormSimple
 /**
  * Unset each $a[array[$i]]
  */
-function unset_r($a, $i) {
+function unsetR($a, $i) {
     foreach($a as $k=>$v)
         if(isset($v[$i]))
             unset($a[$k][$i]);

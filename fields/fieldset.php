@@ -8,6 +8,6 @@ class Fieldset extends Field
 	 *
 	 * @see html
      */
-    public function html_content(){}
+    public function htmlContent(){}
 }
 ?>

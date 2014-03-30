@@ -8,10 +8,10 @@ class Textarea extends Field
 	 *
 	 * @see html
      */
-    public function html_content()
+    public function htmlContent()
     {
-        $html = '<textarea id="' . $this->html_id() . '" rows="10" ';
-        $html .= 'name="' . $this->html_name() . '" ';
+        $html = '<textarea id="' . $this->htmlId() . '" rows="10" ';
+        $html .= 'name="' . $this->htmlName() . '" ';
 		$html .= 'placeholder="' . $this->placeholder() . '" ';
 		if($this->locked()) $html .= 'disabled="disabled" ';
 		if($this->required()) $html .= 'required ';

@@ -13,7 +13,7 @@ abstract class Field
 
     private $hidden;
     private $locked;
-    final public function __construct(
+    final public function _Construct(
         $id,
         $title = '', $value = '', $placeholder = '',
         $required = False, $hidden = False, $locked = False
@@ -34,7 +34,7 @@ abstract class Field
 	 *
 	 * This method is often overwritten by subclasses.
 	 *
-	 * @see FormSimple::parse_parameters()
+	 * @see FormSimple::parseParameters()
      */
     public function construct($punctuation, $title, $content_type, $content)
     {
@@ -62,7 +62,7 @@ abstract class Field
 	 * @see is_blacklisted
 	 * @see FormSimple::post()
      */
-    final public function check_content()
+    final public function checkContent()
     {
 		// empty and required
         if(empty($this->value) && $this->required)
@@ -73,8 +73,8 @@ abstract class Field
 		// not empty but not valid
         if(
             !empty($this->value) &&
-            ($this->is_blacklisted()
-            || !$this->is_valid())
+            ($this->isBlacklisted()
+            || !$this->isValid())
         ) {
 			// use specific keyword if translation exists, or use generic
 			$lang = FormSimple::sword('field_error_' . $this->type(), Null, '');
@@ -97,7 +97,7 @@ abstract class Field
 	 *
 	 * @see check_content
      */
-    final public function is_blacklisted()
+    final public function isBlacklisted()
     {
         if(is_array($this->value) || empty($this->value)) return False;
 
@@ -125,7 +125,7 @@ abstract class Field
 	 *
 	 * @see check_content
      */
-    public function is_valid()
+    public function isValid()
     {
         return True;
     }
@@ -151,10 +151,10 @@ abstract class Field
 		$html .= '>';
 
 		$html .= '<div class="title">';
-		$html .= $this->html_title();
+		$html .= $this->htmlTitle();
 		$html .= '</div>';
 
-		$html .= $this->html_content();
+		$html .= $this->htmlContent();
 
 		$error = $this->error;
 		if(!empty($error))
@@ -174,7 +174,7 @@ abstract class Field
 	 *
 	 * @see html
      */
-    public function html_title()
+    public function htmlTitle()
 	{
         if(!empty($this->title)) return $this->title;
 
@@ -188,7 +188,7 @@ abstract class Field
 	 *
 	 * @see html
      */
-    abstract public function html_content();
+    abstract public function htmlContent();
 
     /**
      * Return the field input identifier.
@@ -200,7 +200,7 @@ abstract class Field
 	 * @see html_label
 	 * @see html_content
      */
-    final protected function html_id()
+    final protected function htmlId()
     {
         return 'FormSimple_field' . $this->id;
     }
@@ -212,7 +212,7 @@ abstract class Field
 	 *
 	 * @see html_content
      */
-    final protected function html_name()
+    final protected function htmlName()
     {
         return 'FormSimple_fields[' . $this->id . ']';
     }
@@ -253,7 +253,7 @@ abstract class Field
      * Define selected values of the multi-values field.
      * @param mixed $values the value or array of values to select
      */
-    final public function value_selection($values)
+    final public function valueSelection($values)
     {
         if(!is_array($this->value)) return False;
 

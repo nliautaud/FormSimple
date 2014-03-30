@@ -26,7 +26,7 @@ class Url extends Text
      * Define if the field content is valid
      * @return boolean
      */
-    public function is_valid()
+    public function isValid()
     {
         $pattern =
 			"`^(?:https?:\/\/(?:www\.)?|www\.)" .

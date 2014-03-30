@@ -31,7 +31,7 @@ class Checkbox extends Field
 	 *
 	 * @see html
      */
-    public function html_content()
+    public function htmlContent()
     {
 		$html = '';
         if(is_array($this->value()))
@@ -40,9 +40,9 @@ class Checkbox extends Field
 			foreach($this->value() as $i => $arr)
 			{
 				$html .= '<div class="' . $this->type() . '">';
-				$html .= '<input id="' . $this->html_id() . '_option' . $i . '" ';
+				$html .= '<input id="' . $this->htmlId() . '_option' . $i . '" ';
 				$html .= 'type="' . $this->type() . '" ';
-				$html .= 'name="' . $this->html_name() . '" ';
+				$html .= 'name="' . $this->htmlName() . '" ';
 				$html .= 'value="' . $arr[1] . '" ';
 				if($this->locked()) $html .= 'disabled="disabled" ';
 				if(isset($arr[2]) && $arr[2] == 'selected')

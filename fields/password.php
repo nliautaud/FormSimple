@@ -24,7 +24,7 @@ class Password extends Text
 	*
 	* @return boolean
 	*/
-	public function is_valid()
+	public function isValid()
 	{
 		if($this->value() == $this->required()) return True;
 		return False;

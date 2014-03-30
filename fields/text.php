@@ -9,10 +9,10 @@ class Text extends Field
 	 *
 	 * @see html
      */
-    public function html_content()
+    public function htmlContent()
     {
-        $html = '<input id="' . $this->html_id() . '" ';
-        $html .= 'name="' . $this->html_name() . '" ';
+        $html = '<input id="' . $this->htmlId() . '" ';
+        $html .= 'name="' . $this->htmlName() . '" ';
 		$html .= 'type="' . $this->type() . '" ';
         $html .= 'value="' . $this->value() . '"';
 		$html .= 'placeholder="' . $this->placeholder() . '" ';

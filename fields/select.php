@@ -10,10 +10,10 @@ class Select extends Checkbox
 	 *
 	 * @see html
      */
-    public function html_content()
+    public function htmlContent()
     {
-        $html = '<select id="' . $this->html_id() . '" ';
-        $html .= 'name="' . $this->html_name() . '" ';
+        $html = '<select id="' . $this->htmlId() . '" ';
+        $html .= 'name="' . $this->htmlName() . '" ';
 		$html .= 'placeholder="' . $this->placeholder() . '" ';
 		if($this->locked()) $html .= 'disabled="disabled" ';
 		if($this->required()) $html .= 'required ';
@@ -21,7 +21,7 @@ class Select extends Checkbox
 		if(is_array($this->value()))
 		foreach($this->value() as $i => $arr)
 		{
-			$html .= '<option id="' . $this->html_id() . '_option' . $i . '" ';
+			$html .= '<option id="' . $this->htmlId() . '_option' . $i . '" ';
 			$html .= 'value="' . $arr[1] . '" ';
 			if(isset($arr[2]) && $arr[2] == 'selected')
 				$html .= 'selected="selected" ';

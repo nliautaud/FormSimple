@@ -10,7 +10,7 @@ abstract class Action
     protected $version;
     protected $form;
 
-    final public function __construct($form)
+    final public function _Construct($form)
     {
         $this->version = '0';
         $this->form = $form;
@@ -33,7 +33,7 @@ abstract class Action
      * Return informations about the action error.
      * @return string
      */
-    abstract public function html_debug();
+    abstract public function htmlDebug();
 
     final protected function error($keyword)
     {

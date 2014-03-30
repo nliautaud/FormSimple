@@ -6,7 +6,7 @@ class Email extends Text
      * Define if the field content is valid
      * @return boolean
      */
-    public function is_valid()
+    public function isValid()
     {
         $pattern =
             "`^(?:(?:[a-z0-9][-.+_=']?)*[a-z0-9])+" .
