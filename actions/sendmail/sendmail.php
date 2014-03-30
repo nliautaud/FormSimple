@@ -14,31 +14,31 @@ class Sendmail extends Action
     private $subject;
     private $headers;
     private $body;
-    
+
     /*
      * Action initialisation.
      */
-    public function construct() 
+    public function construct()
     {
         $this->version = '1.0';
-		
+
         $this->targets = '';
     }
-    
+
     /*
      * Send a mail to fom targets with the fields contents.
      * @param Form $form the posted form
      * @return string the mail sending status
      */
     function exec()
-    {        
+    {
         $server = $_SERVER['SERVER_NAME'];
         $uri = $_SERVER['REQUEST_URI'];
         $askcopy = False;
-        
+
         // title
         $html  = '<h2>' . $this->word('fromsite') . ' <i>' . $server . '</i></h2>';
-        
+
         // fields
 		$skip = explode(',', $this->setting('skip_fields'));
         foreach($this->form->fields() as $field)
@@ -60,7 +60,7 @@ class Sendmail extends Action
                 $html .= '<p><b>' . $this->word($title);
                 if($field->hidden()) $html .= ' (' . $this->word('hidden').')';
                 $html .= ' :</b> ';
-                
+
                 // field value
                 switch($type)
                 {
@@ -81,17 +81,17 @@ class Sendmail extends Action
                         break;
                     default :
                         $html .= $value;
-                } 
+                }
                 $html .= '</p>';
             }
         }
-        
+
         // footer
         $html .= '<p><i>';
         $html .= $this->word('frompage') . ' ';
         $html .= $this->html_link($server.$uri, $uri);
         $html .= '</i></p>';
-        
+
         if(empty($name))
         {
             $name = $this->word('anonymous');
@@ -106,16 +106,16 @@ class Sendmail extends Action
             $this->subject = $this->word('nosubject');
         }
         $this->subject = '=?utf-8?B?' . base64_encode($this->subject) . '?=';
-        
+
         $mime_boundary = '----FormSimple_boundary--'.md5(time());
-        
+
         $this->headers  = "From: $name <$email>\n";
         $this->headers .= "Reply-To: $name <$email>\n";
         $this->headers .= "Return-Path: $name <$email>\n";
         $this->headers .= "MIME-Version: 1.0\n";
         $this->headers .= "Content-type: multipart/alternative; boundary=\"$mime_boundary\"\n";
         $this->headers .= "X-Mailer: PHP/" . phpversion() . "\n" ;
-        
+
         //plain text version
         $this->body  = "--$mime_boundary\n";
         $this->body .= "Content-Type: text/plain; charset=UTF-8\n";
@@ -128,9 +128,9 @@ class Sendmail extends Action
         $this->body .= "Content-Transfer-Encoding: 7bit\n\n";
         $this->body .= $html."\n\n";
         $this->body .= "--$mime_boundary--\n\n";
-        
+
         $this->targets = $this->get_emails($this->form->params(), $this->setting('default_targets'));
-        
+
         if(empty($this->targets))
         {
             $this->error('error_targets');
@@ -149,7 +149,7 @@ class Sendmail extends Action
             else $this->error('error');
         }
     }
-    
+
     /*
      * Things that happened when the action is complete.
      */
@@ -158,7 +158,7 @@ class Sendmail extends Action
 		$this->form->message($this->word('completed'));
 		$this->form->hide(True);
     }
-	
+
     /*
      * Return informations about the action.
      * @return string
@@ -171,7 +171,7 @@ class Sendmail extends Action
         $output .= 'Content<pre>' . $this->body . '</pre>';
         return $output;
     }
-    
+
     /*
      * Find and return email addresses from some inputs.
      * @param string|array any number of parameters
@@ -180,8 +180,8 @@ class Sendmail extends Action
     private function get_emails()
     {
         $email_pattern =
-            "`(?:(?:[a-z0-9][-.+_=']?)*[a-z0-9])+" . 
-            "@(?:(?:[a-z0-9][-._]?){0,62}[a-z0-9])+" . 
+            "`(?:(?:[a-z0-9][-.+_=']?)*[a-z0-9])+" .
+            "@(?:(?:[a-z0-9][-._]?){0,62}[a-z0-9])+" .
             "\.[a-z0-9]{2,6}`i";
 		foreach(func_get_args() as $arg)
 		{
@@ -196,14 +196,14 @@ class Sendmail extends Action
 		}
 		return $all_targets;
     }
-    
+
     /*
     * Return an html link
     * @param string $href the link address
     * @param string $title if not used, the link title will be the address
     * @param string $protocol http:// by default
     * @return string the <a>
-    */   
+    */
     function html_link($href, $title = False, $protocol = 'http://')
     {
         if(!$title) $title = $href;

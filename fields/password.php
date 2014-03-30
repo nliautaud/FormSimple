@@ -18,7 +18,7 @@ class Password extends Text
 			$this->locked(True);
 		}
     }
-	
+
 	/**
 	* Define if the field content is valid.
 	*

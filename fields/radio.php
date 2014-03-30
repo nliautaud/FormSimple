@@ -1,4 +1,5 @@
-<?php
-require_once 'checkbox.php';
-class Radio extends Checkbox{}
+<?php
+require_once 'checkbox.php';
+
+class Radio extends Checkbox{}
 ?>

@@ -1,4 +1,5 @@
-<?php
-require_once 'text.php';
-class Subject extends Text{}
+<?php
+require_once 'text.php';
+
+class Subject extends Text{}
 ?>

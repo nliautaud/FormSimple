@@ -1,16 +1,17 @@
-<?php
-require_once 'text.php';
-class Phone extends Text
-{
-    /**
-     * Define if the field content is valid
-     * @return boolean
-     */
-    public function is_valid()
-    {        
-        $pattern = '`^\+?[-0-9(). ]{6,}$$`i';
-        if(preg_match($pattern, $this->value())) return True;
-        else return False;
-    }
-}
+<?php
+require_once 'text.php';
+
+class Phone extends Text
+{
+    /**
+     * Define if the field content is valid
+     * @return boolean
+     */
+    public function is_valid()
+    {
+        $pattern = '`^\+?[-0-9(). ]{6,}$$`i';
+        if(preg_match($pattern, $this->value())) return True;
+        else return False;
+    }
+}
 ?>

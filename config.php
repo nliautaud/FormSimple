@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * FormSimple configuration file.
  *
@@ -14,7 +14,7 @@ $FormSimple_settings = array(
     'token' => True,
 	'style' => True,
     'debug' => False,
-	
+
     'langs' => array(
         'selected' => '',
         'values' => array(
@@ -44,7 +44,7 @@ $FormSimple_settings = array(
             'b' => 'Blacklist'
         )
     ),
-    
+
     'name_field_filter' => '',
     'name_field_filter_type' => array(
         'selected' => 'b',
@@ -53,7 +53,7 @@ $FormSimple_settings = array(
             'b' => 'Blacklist'
         )
     ),
-    
+
     'email_field_filter' => 'anonymailer.net,anonymails.com,anonymouse.org,anonymousspeech.com,brefmail.com,hidemyass.com,mail4trash.com,mailfreeonline.com,mailinator.com,mail-temporaire.fr,makemetheking.com,mytrashmail.com,sendanonymousemail.com,sendanonymousemail.net,send-email.org,sharpmail.co.uk,tempinbox.com,theanonymousemail.com,trashmail.net,trash-mail.com,jetable.org,yopmail.com',
     'email_field_filter_type' => array(
         'selected' => 'b',
