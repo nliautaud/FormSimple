@@ -60,26 +60,22 @@ class FormSimple
      */
     private static function define_constants()
     {
-        $dir = dirname(__FILE__) . '/';
-        $const = array(
-            'path' => $dir,
-            'url' => '',
-            'langs' => '',
-            'actionspath' => $dir . 'actions/',
-            'fieldspath' => $dir . 'fields/',
-            'langspath' => $dir . 'lang/',
-            'configpath' => $dir . 'config.php',
+        define('FSSERVER',      'http://' . $_SERVER['SERVER_NAME']);
+        define('FSROOT',        $_SERVER['DOCUMENT_ROOT']);
+        define('FSPATH',        dirname(__FILE__) . '/');
+        define('FSRELPATH',     substr(FSPATH, strlen(FSROOT)));
+        define('FSURL',         FSSERVER . FSRELPATH);
 
-            'docurl' =>  'http://nliautaud.fr/wiki/travaux/FormSimple',
-            'downurl' =>  'http://get-simple.info/extend/plugin/FormSimple/35',
-            'forumurl' =>  'http://get-simple.info/forum/topic/1108',
-            'versionurl' =>  'http://get-simple.info/api/extend/?id=35',
-        );
-        foreach($const as $key => $val)
-        {
-            $key = strtoupper('FS' . $key);
-            if(!defined($key)) define($key, $val);
-        }
+        define('FSACTIONSPATH', FSPATH . 'actions/');
+        define('FSFIELDSPATH',  FSPATH . 'fields/');
+        define('FSLANGSPATH',   FSPATH . 'lang/');
+        define('FSCONFIGPATH',  FSPATH . 'config.php');
+
+        define('FSWEBSITE',     'https://github.com/nliautaud/FormSimple');
+        define('FSDOCURL',      'https://github.com/nliautaud/FormSimple');
+        define('FSDOWNURL',     'https://github.com/nliautaud/FormSimple');
+        define('FSFORUMURL',    'https://github.com/nliautaud/FormSimple');
+        define('FSVERSIONURL',  'https://github.com/nliautaud/FormSimple');
     }
 
     /*
