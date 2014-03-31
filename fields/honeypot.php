@@ -12,4 +12,3 @@ class Honeypot extends Text
         return true;
     }
 }
-?>

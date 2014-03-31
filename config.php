@@ -89,4 +89,4 @@ $FormSimple_settings = array(
             'b' => 'Blacklist'
         )
     )
-);?>
+);

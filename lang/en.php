@@ -72,4 +72,3 @@ $FormSimple_lang = array(
 'update_alert'			=> 'There is a new release!',
 'update_download'		=> 'Download the last release',
 );
-?>

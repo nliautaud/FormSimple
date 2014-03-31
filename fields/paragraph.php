@@ -9,4 +9,3 @@ class Paragraph extends Field
         return '<p>' . $this->value() . '</p>';
     }
 }
-?>

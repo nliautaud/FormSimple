@@ -14,4 +14,4 @@ $FormSimple_lang = array(
 'fromsite'		=> 'Wiadomość wysłana z',
 'frompage'		=> 'Wiadomość została wysłana ze strony'
 );
-?>
+

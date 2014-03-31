@@ -103,4 +103,4 @@ Erota pilkulla.',
 'Poistaa käytöstä sähköpostilähetyksen, näyttää FormSimplein datarakenteen, data lähetetään POST-syntaksin kautta ja näyttää sähköpostin minkä olisi lähetetty.',
 'debug_warn'=> 'Älä aktivoi tätä tuotettavassa sivussa!'
 );
-?>
+

@@ -56,4 +56,3 @@ class Checkbox extends Field
         return $html;
     }
 }
-?>

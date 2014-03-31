@@ -104,4 +104,4 @@ Reikšmės atskiriamos kableliais.',
 siunčiamo laiško vaizdas.',
 'debug_warn'=> 'Prašome nenaudoti veikiančioje svetainėje!'
 );
-?>
+

@@ -103,5 +103,5 @@ Gescheiden door komma\'s.',
 'Schakel mail sturen uit, toon datastructuur van FormSimple, data verstuurd met het POST-request en de mail die verstuurd zou zijn.',
 'debug_warn'=> 'Schakel dit niet in op een website die in bedrijf is!'
 );
-?>
+
 

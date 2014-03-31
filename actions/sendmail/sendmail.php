@@ -209,4 +209,4 @@ class Sendmail extends Action
         return '<a href="' . $protocol . $href . '">' . $title . '</a>';
     }
 }
-?>
+

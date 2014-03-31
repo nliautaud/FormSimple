@@ -14,4 +14,4 @@ $SimpleForm_lang = array(
 'fromsite'		=> 'Išsiųsta iš',
 'frompage'		=> 'Ši žinutė buvo išsiųsta iš puslapio'
 );
-?>
+

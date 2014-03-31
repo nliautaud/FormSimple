@@ -14,4 +14,4 @@ $FormSimple_lang = array(
 'fromsite'		=> 'Mail sent from',
 'frompage'		=> 'This email was sent from page'
 );
-?>
+

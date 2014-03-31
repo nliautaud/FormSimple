@@ -103,4 +103,4 @@ Oddzielone przecinkami.',
 'Wyłącza wysyłanie maili, wyświetla strukturę danych FormSimple oraz mail, który byłyby wysłany przez funkcję POST.',
 'debug_warn'=> 'Nie włączać na stronie produkcyjnej!'
 );
-?>
+

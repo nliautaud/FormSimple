@@ -14,4 +14,3 @@ class Phone extends Text
         else return false;
     }
 }
-?>

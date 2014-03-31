@@ -13,4 +13,3 @@ class Message extends Textarea
         return false;
     }
 }
-?>

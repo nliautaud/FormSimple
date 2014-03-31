@@ -49,4 +49,3 @@ class Captcha extends Field
         return $html;
     }
 }
-?>

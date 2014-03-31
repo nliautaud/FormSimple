@@ -20,4 +20,3 @@ class Textarea extends Field
         return $html;
     }
 }
-?>

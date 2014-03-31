@@ -104,4 +104,4 @@ Separados por vírgulas.',
 e-mail que teria sido enviado.',
 'debug_warn'=> 'Não ative para sites de produção!'
 );
-?>
+

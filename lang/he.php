@@ -104,4 +104,4 @@ Whitelist : ערכים נדרשים לשדה בכדי לשלוח מכתב.<br />
 the email that would have been sent.',
 'debug_warn'=> 'Don\'t active that on production website!'
 );
-?>
+

@@ -103,4 +103,3 @@ Separati da virgola.',
 'Disabilita l\'invio di email, mostra la data structure di FormSimple , i dati inviati da POST e l\'email che sarebbe stata inviata.',
 'debug_warn'=> 'Non attivarlo sul website di produzione!'
 );
-?>

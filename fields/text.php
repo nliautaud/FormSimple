@@ -23,4 +23,3 @@ class Text extends Field
         return $html;
     }
 }
-?>

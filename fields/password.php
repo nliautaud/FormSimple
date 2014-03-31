@@ -29,4 +29,3 @@ class Password extends Text
         return false;
     }
 }
-?>

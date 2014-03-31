@@ -51,4 +51,3 @@ function FormSimpleHeader()
  * Parse page content to replace all tags by forms.
  */
 add_filter('content', 'FormSimple::parse');
-?>

@@ -299,4 +299,3 @@ abstract class Field
         if(is_string($val)) $this->error = $val;
     }
 }
-?>

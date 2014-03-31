@@ -39,5 +39,5 @@ $FormSimple_lang = array(
 'field_message' => 'Meddelandet är för kort.',
 'field_captcha' => 'Kopiera bokstäverna'
 );
-?>
+
 

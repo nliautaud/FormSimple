@@ -35,4 +35,3 @@ class Url extends Text
         else return false;
     }
 }
-?>

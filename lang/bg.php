@@ -105,4 +105,3 @@ Check the file permissions :',
 the email that would have been sent.',
 'debug_warn'=> 'Don\'t active that on production website!'
 );
-?>
