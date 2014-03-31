@@ -12,8 +12,7 @@ class Password extends Text
         $this->title($title);
         $this->required($content);
         $this->locked($content_type == '=&gt;' ? true : false);
-        if($punctuation == '?')
-        {
+        if ($punctuation == '?') {
             $this->hidden(true);
             $this->locked(true);
         }

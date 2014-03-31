@@ -42,8 +42,7 @@ add_action('plugins-sidebar', 'createSideMenu', array($thisfile, 'FormSimple'));
 add_action('theme-header', 'FormSimple_header');
 function FormSimpleHeader()
 {
-    if(FormSimple::setting('use_default_style'))
-    {
+    if (FormSimple::setting('use_default_style')) {
         echo '<link rel="stylesheet" type="text/css" ';
         echo 'href="plugins/FormSimple/style.css" />';
     }

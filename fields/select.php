@@ -19,8 +19,7 @@ class Select extends Checkbox
         if($this->required()) $html .= 'required ';
         $html .= '>';
         if(is_array($this->value()))
-        foreach($this->value() as $i => $arr)
-        {
+        foreach ($this->value() as $i => $arr) {
             $html .= '<option id="' . $this->htmlId() . '_option' . $i . '" ';
             $html .= 'value="' . $arr[1] . '" ';
             if(isset($arr[2]) && $arr[2] == 'selected')

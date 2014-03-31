@@ -67,7 +67,9 @@ abstract class Action
         global $$settings;
         require_once FSACTIONSPATH . $this->name() . '/config.php';
         $s = $$settings;
-        if(isset($s[$key])) return $s[$key];
+        if (isset($s[$key])) {
+            return $s[$key];
+        }
         else return null;
     }
 
@@ -84,9 +86,10 @@ abstract class Action
         global $FormSimple_lang;
 
         $file =  $this->form->lang() . '.php';
-        if(!file_exists($path.$file)) $file = 'en.php';
-        if(file_exists($path.$file))
-        {
+        if (!file_exists($path.$file)) {
+            $file = 'en.php';
+        }
+        if (file_exists($path.$file)) {
             require $path.$file;
 
             if(isset($FormSimple_lang[$key]))

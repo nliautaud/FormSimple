@@ -9,7 +9,9 @@ class Captcha extends Field
     {
         include_once FSPATH . 'fields/securimage/securimage.php';
         $s = new Securimage();
-        if(!$s->check($this->value())) return false;
+        if (!$s->check($this->value())) {
+            return false;
+        }
         return true;
     }
 
@@ -36,8 +38,12 @@ class Captcha extends Field
         $html .= 'size="10" maxlength="6" ';
 
         $html .= 'placeholder="' . $this->placeholder() . '" ';
-        if($this->locked()) $html .= 'disabled="disabled" ';
-        if($this->required()) $html .= 'required ';
+        if ($this->locked()) {
+            $html .= 'disabled="disabled" ';
+        }
+        if ($this->required()) {
+            $html .= 'required ';
+        }
         $html .= '/>';
 
         return $html;

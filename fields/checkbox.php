@@ -16,8 +16,7 @@ class Checkbox extends Field
         // set attributes
         $this->locked($content_type == '=>;' ? true : false);
         $this->required($punctuation == '!' ? true : false);
-        if($punctuation == '?')
-        {
+        if ($punctuation == '?') {
             $this->hidden(true);
             $this->locked(true);
         }
@@ -34,19 +33,20 @@ class Checkbox extends Field
     public function htmlContent()
     {
         $html = '';
-        if(is_array($this->value()))
-        {
+        if (is_array($this->value())) {
             $html .= '<fieldset>';
-            foreach($this->value() as $i => $arr)
-            {
+            foreach ($this->value() as $i => $arr) {
                 $html .= '<div class="' . $this->type() . '">';
                 $html .= '<input id="' . $this->htmlId() . '_option' . $i . '" ';
                 $html .= 'type="' . $this->type() . '" ';
                 $html .= 'name="' . $this->htmlName() . '" ';
                 $html .= 'value="' . $arr[1] . '" ';
-                if($this->locked()) $html .= 'disabled="disabled" ';
-                if(isset($arr[2]) && $arr[2] == 'selected')
+                if ($this->locked()) {
+                    $html .= 'disabled="disabled" ';
+                }
+                if (isset($arr[2]) && $arr[2] == 'selected') {
                     $html .= 'checked ';
+                }
                 $html .= '/>' . $arr[1];
                 $html .= '</div>';
             }

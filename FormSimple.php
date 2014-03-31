@@ -85,9 +85,9 @@ class FormSimple
     private function defineId()
     {
         global $FSCOUNT;
-        if(!isset($FSCOUNT))
+        if (!isset($FSCOUNT)) {
             $FSCOUNT = 0;
-        else $FSCOUNT++;
+        } else $FSCOUNT++;
         $this->id = $FSCOUNT;
     }
 
@@ -105,39 +105,43 @@ class FormSimple
         $html = '<div class="FormSimple" id="FormSimple' . $this->id . '">';
 
         // debug
-        if(FormSimple::setting('debug')) $html .= $this->htmlDebug();
+        if (FormSimple::setting('debug')) {
+            $html .= $this->htmlDebug();
+        }
 
         // message
         $html .= $this->htmlMessage(
             $this->word($this->message),
-            $this->completed ? 'confirm' : 'error');
+            $this->completed ? 'confirm' : 'error'
+        );
 
         // form
-        if(FormSimple::setting('visible') && $this->visible)
-        {
+        if (FormSimple::setting('visible') && $this->visible) {
             $html .= '<form method="post" ';
             $html .= 'action="#FormSimple' . $this->id . '" ';
             $html .= 'class="' . $this->action->name() . '" ';
             $html .= 'autocomplete="off" >';
 
-            foreach($this->fields as $id => $field)
-            {
+            foreach ($this->fields as $id => $field) {
                 // field
-                if($field->type() != 'fieldset')
-                {
+                if ($field->type() != 'fieldset') {
                     $html .= $field->html();
-                }
-                // fieldset
-                else
-                {
-                    if($this->fieldset() > 0) $html .= '</fieldset>';
+                } else {
+                    if ($this->fieldset() > 0) {
+                        $html .= '</fieldset>';
+                    }
                     $html .= '<fieldset>';
-                    if($field->title())
+                    if ($field->title()) {
                         $html .= '<legend>' . $field->title() . '</legend>';
+                    }
                     $this->fieldset = $field->value();
                 }
-                if($this->fieldset == 0) $html.= '</fieldset>';
-                if($this->fieldset > -1) $this->fieldset--;
+                if($this->fieldset == 0) {
+                    $html.= '</fieldset>';
+                }
+                if($this->fieldset > -1) {
+                    $this->fieldset--;
+                }
             }
             // id, token and submit
             $html .= '<div class="field submit">';
@@ -185,14 +189,13 @@ class FormSimple
         error_reporting(E_ALL);
         ob_start();
 
-        if(!empty($_SESSION))
-        {
+        if (!empty($_SESSION)) {
             echo'Session ';
             print_r($_SESSION);
         }
-        if(!empty($_POST['FormSimple_form'])
-        && $_POST['FormSimple_form']['id'] == $this->id)
-        {
+        if (!empty($_POST['FormSimple_form'])
+            && $_POST['FormSimple_form']['id'] == $this->id
+        ) {
             echo'Post ';
             print_r($_POST);
         }
@@ -201,8 +204,9 @@ class FormSimple
 
         // debug layout
         $output = FormSimple::htmlReport('FormSimple #' . $this->id . ' debug', $debug);
-        if($this->completed)
+        if ($this->completed) {
             $output .= FormSimple::htmlReport('FormSimple #' . $this->id . ' action debug', $this->action->htmlDebug());
+        }
         $output .= '<h4 style="color:#c33">FormSimple #' . $this->id . '</h4>';
 
         return $output;
@@ -223,51 +227,38 @@ class FormSimple
      */
     public function post()
     {
-        if(!empty($_POST['FormSimple_form']) &&
-            $_POST['FormSimple_form']['id'] == $this->id)
-        {
+        if (!empty($_POST['FormSimple_form'])
+            && $_POST['FormSimple_form']['id'] == $this->id
+        ) {
             // Update and check fields values
-            foreach($this->formatData($_POST['FormSimple_fields']) as $field_id => $field_post)
-            {
+            foreach ( $this->formatData($_POST['FormSimple_fields']) as $field_id => $field_post ) {
                 $field = $this->field($field_id);
 
                 // Define field value or values selections
-                if(is_array($field->value()))
-                {
+                if (is_array($field->value())) {
                     $field->valueSelection($field_post);
-                }
-                else $field->value($field_post);
+                } else $field->value($field_post);
 
-                if(!$field->checkContent())
-                {
+                if (!$field->checkContent()) {
                     $errors = true;
                 }
             }
             // Security tokens
-            if(FormSimple::setting('enable_token') && !$this->tokenCompare())
-            {
+            if (FormSimple::setting('enable_token') && !$this->tokenCompare()) {
                 $this->message('form_error_token');
                 $this->visible(false);
-            }
-            elseif(isset($errors))
-            {
+            } elseif (isset($errors)) {
                 $this->message('form_error_fields');
-            }
-            else // Action
-            {
-                // FormSimple is disabled
-                if(!FormSimple::setting('enable') && $this->enable)
-                {
+            } else {
+                // Action
+                if (!FormSimple::setting('enable') && $this->enable) {
+                    // FormSimple is disabled
                     $this->message('form_error_disabled');
-                }
-                // No action is defined
-                elseif($this->action() == null)
-                {
+                } elseif ($this->action() == null) {
+                    // No action is defined
                     $this->message('form_error_action');
-                }
-                // Execute action
-                else
-                {
+                } else {
+                    // Execute action
                     $this->completed(true);
                     $this->action->exec();
                 }
@@ -285,18 +276,17 @@ class FormSimple
      */
     public function action($class = null)
     {
-        if($class === null) return $this->action;
+        if($class === null) {
+            return $this->action;
+        }
 
         $file = FSACTIONSPATH . $class . '/' . $class . '.php';
-        if(file_exists($file))
-        {
+        if (file_exists($file)) {
             require_once($file);
-            if(class_exists($class))
+            if(class_exists($class)) {
                 $this->action = new $class($this);
-            else
-                $this->error = 'the action class "'.$class.'" does not exist.';
-        }
-        else $this->error = 'the action file "'.$class.'.php" does not exist.';
+            } else $this->error = 'the action class "'.$class.'" does not exist.';
+        } else $this->error = 'the action file "'.$class.'.php" does not exist.';
     }
 
     /**
@@ -307,14 +297,12 @@ class FormSimple
     public static function actionsList()
     {
         $actions = array();
-        if($handle = opendir(FSACTIONSPATH))
-        {
-            while(false !== ($dir = readdir($handle)))
-            {
-                if($dir[0] != '.'
-                && is_dir(FSACTIONSPATH . $dir)
-                && file_exists(FSACTIONSPATH . $dir . '/' . $dir . '.php'))
-                {
+        if ($handle = opendir(FSACTIONSPATH)) {
+            while (false !== ($dir = readdir($handle))) {
+                if ($dir[0] != '.'
+                    && is_dir(FSACTIONSPATH . $dir)
+                    && file_exists(FSACTIONSPATH . $dir . '/' . $dir . '.php')
+                ) {
                     $actions[] = $dir;
                 }
             }
@@ -344,10 +332,8 @@ class FormSimple
         $langs = FormSimple::setting('langs');
         $this->lang = $langs['selected'];
 
-        if(empty($this->lang))
-        {
-            if(!defined('FSLANG'))
-            {
+        if (empty($this->lang)) {
+            if (!defined('FSLANG')) {
                 return $this->sword($key, 'en');
             }
             return $this->sword($key, FSLANG);
@@ -375,20 +361,18 @@ class FormSimple
         $lang = null,
         $default = null,
         $langs_path = FSLANGSPATH
-    ){
+    ) {
         if(empty($key)) return '';
 
         // use setting defined language if not given
-        if($lang === null)
-        {
+        if ($lang === null) {
             $langs = FormSimple::setting('langs');
             $lang = $langs['selected'];
         }
 
         // use english file if translation file does not exist
         $path = $langs_path . $lang . '.php';
-        if(!file_exists($path))
-        {
+        if (!file_exists($path)) {
             $path = $langs_path . 'en.php';
         }
 
@@ -396,14 +380,12 @@ class FormSimple
         include_once $path;
 
         // return translation if exists
-        if(isset($FormSimple_lang[$key]))
-        {
+        if (isset($FormSimple_lang[$key])) {
             return $FormSimple_lang[$key];
         }
 
         // return formated default value if exists
-        if($default !== null)
-        {
+        if ($default !== null) {
             return ucfirst(str_replace('_', ' ', $default));
         }
 
@@ -430,8 +412,9 @@ class FormSimple
      */
     private function tokenGet()
     {
-        if(!isset($_SESSION['FormSimple_token']))
+        if(!isset($_SESSION['FormSimple_token'])) {
             $this->tokenSet();
+        }
         return $_SESSION['FormSimple_token'];
     }
     /*
@@ -441,10 +424,12 @@ class FormSimple
      */
     private function tokenCompare()
     {
-        if(isset($_POST['FormSimple_form']['token'])
-        && $this->tokenGet() === $_POST['FormSimple_form']['token'])
+        if (isset($_POST['FormSimple_form']['token'])
+            && $this->tokenGet() === $_POST['FormSimple_form']['token']
+        ) {
             return true;
-        else return false;
+        }
+        return false;
     }
 
 
@@ -462,10 +447,11 @@ class FormSimple
      */
     private function formatData($data)
     {
-        if(is_array($data))
-            foreach($data as $key => $val)
+        if (is_array($data)) {
+            foreach ($data as $key => $val) {
                 $data[$key] = $this->formatData($val);
-        else {
+            }
+        } else {
             $data = stripslashes($data);
             $data = htmlentities($data, ENT_QUOTES, 'UTF-8');
         }
@@ -477,8 +463,7 @@ class FormSimple
      */
     public function reset()
     {
-        foreach($this->fields as $field)
-        {
+        foreach ($this->fields as $field) {
             $field->value('');
             $field->error('');
         }
@@ -494,7 +479,9 @@ class FormSimple
     public static function isFieldClass($className, $include = false)
     {
         $file = FSFIELDSPATH . $className . '.php';
-        if($include && file_exists($file)) require_once $file;
+        if ($include && file_exists($file)) {
+            require_once $file;
+        }
         if(class_exists($className)) return true;
         return false;
     }
@@ -526,8 +513,7 @@ class FormSimple
                     . '(?:\s*</p>)?`';      //// skip the surrounding <p> if exists
         preg_match_all($pattern, $string, $tags, PREG_SET_ORDER);
 
-        foreach($tags as $tag)
-        {
+        foreach ($tags as $tag) {
             // create form
             $form = new FormSimple();
             $form->action($tag[1]);
@@ -552,7 +538,9 @@ class FormSimple
      */
     public function parseParameters($parameters, $separator = ',')
     {
-        if($parameters === null) return false;
+        if($parameters === null) {
+            return false;
+        }
 
         // assure encoding
         $parameters = str_replace('&nbsp;', ' ', $parameters);
@@ -569,27 +557,21 @@ class FormSimple
 
         // define unknown parameters
         $fieldsnbr = 0;
-        foreach($parameters as $p)
-        {
-            if(!FormSimple::isFieldClass($p[1], true))
-            {
+        foreach ($parameters as $p) {
+            if (!FormSimple::isFieldClass($p[1], true)) {
                 $this->addParam($p[1]);
-            }
-            else $fieldsnbr++;
+            } else $fieldsnbr++;
         }
         // use action default fields if there is no fields in parameters
-        if($fieldsnbr == 0 && $this->action != null)
-        {
+        if ($fieldsnbr == 0 && $this->action != null) {
             $default = $this->action->setting('default_params');
             $this->parseParameters($default);
         }
         // create and add fields
         $id = 0;
-        foreach($parameters as $p)
-        {
+        foreach ($parameters as $p) {
             $class = $p[1];
-            if(FormSimple::isFieldClass($class, true))
-            {
+            if (FormSimple::isFieldClass($class, true)) {
                 $field = new $class($id);
                 $field->construct($p[2], $p[3], $p[4], $p[5]);
                 $this->addField($field);
@@ -613,8 +595,9 @@ class FormSimple
     {
         $apiback = file_get_contents(FSVERSIONURL);
         $response = json_decode($apiback);
-        if($response->status == 'successful')
+        if ($response->status == 'successful') {
             return $response->version;
+        }
     }
     /**
      * Check if a new version exists.
@@ -626,12 +609,14 @@ class FormSimple
         $actual = explode('.', FormSimple::version());
         $last = FormSimple::lastVersion();
         $last_r = explode('.', $last);
-        foreach($actual as $key => $val)
-        {
-            if(isset($last_r[$key]))
-            {
-                if($val < $last_r[$key]) return $last;
-                if($val > $last_r[$key]) return false;
+        foreach ($actual as $key => $val) {
+            if (isset($last_r[$key])) {
+                if ($val < $last_r[$key]) {
+                    return $last;
+                }
+                if ($val > $last_r[$key]) {
+                    return false;
+                }
             }
         }
         return false;
@@ -669,8 +654,7 @@ class FormSimple
         FormSimple::defineConstants();
 
         $head = '';
-        if(!file_exists(FSCONFIGPATH))
-        {
+        if (!file_exists(FSCONFIGPATH)) {
             $head .= '<div class="error">';
             $head .= FormSimple::sword('error_file_open');
             $head .= '<pre>' . FSCONFIGPATH . '</pre></div>';
@@ -679,8 +663,7 @@ class FormSimple
         $head .= '<h2>' . FormSimple::sword('config_title') . '</h2>';
 
         // Update
-        if($newversion = FormSimple::existsNewVersion())
-        {
+        if ($newversion = FormSimple::existsNewVersion()) {
             $head .= '<div class="updated">' . FormSimple::sword('update_alert');
             $head .= '<br /><a href="' . FSDOWNURL . '">';
             $head .= FormSimple::sword('update_download') . ' (' . $newversion . ')</a></div>';
@@ -694,18 +677,17 @@ class FormSimple
         $forms = FormSimple::configForm();
         $toc = '<li><a href="#FormSimple">FormSimple</a></li>';
         // Actions settings
-        foreach(FormSimple::actionsList() as $action)
-        {
+        foreach (FormSimple::actionsList() as $action) {
             $form = FormSimple::configForm($action);
-            if(!empty($form))
-            {
+            if (!empty($form)) {
                 $forms .= $form;
                 $toc .= '<li><a href="#'. $action . '">' . ucfirst($action) . '</a></li>';
             }
         }
         // Table of contents
-        if(!empty($toc))
+        if(!empty($toc)) {
             $toc = FormSimple::sword('table_of_contents') . '<ul>' . $toc . '</ul>';
+        }
 
         echo $head . $toc . $forms;
     }
@@ -719,13 +701,10 @@ class FormSimple
      */
     private static function configForm($action = '')
     {
-        if(!empty($action))
-        {
+        if (!empty($action)) {
             $name = 'FormSimple_' . $action . '_settings';
             $file = FSACTIONSPATH . $action . '/config.php';
-        }
-        else
-        {
+        } else {
             $action = 'FormSimple';
             $name = 'FormSimple_settings';
             $file = FSCONFIGPATH;
@@ -739,17 +718,13 @@ class FormSimple
 
         // POST
 
-        if(isset($_POST[$name]))
-        {
-            if(FormSimple::configEdit($file, $name, $$name, $_POST[$name]))
-            {
+        if (isset($_POST[$name])) {
+            if (FormSimple::configEdit($file, $name, $$name, $_POST[$name])) {
                 $html .= '<div class="updated">';
                 $html .= FormSimple::sword('config_updated');
                 $html .= '</div>';
                 require $file;
-            }
-            else
-            {
+            } else {
                 $html .= '<div class="error">';
                 $html .= FormSimple::sword('error_file_modify');
                 $html .= '<pre>' . $file_path . '</pre></div>';
@@ -759,8 +734,7 @@ class FormSimple
         // DISPLAY
 
         $html .= '<form action="#' . $action . '" method="post">';
-        foreach($$name as $setting => $value)
-        {
+        foreach ($$name as $setting => $value) {
             $html .= '<div style="margin:10px 0;">';
             $html .= FormSimple::configField($name, $setting, $value);
             $html .= '</div>';
@@ -783,38 +757,31 @@ class FormSimple
      */
     private static function configField($name, $setting, $value)
     {
-        if(is_bool($value))
-        {
+        if (is_bool($value)) {
             $html = '<input type="checkbox" name="' . $name . '[' . $setting . ']" ';
             $html .= $value ? 'checked="checked" ' : '';
             $html .= 'style="float:right;" />';
-        }
-        elseif(is_string($value))
-        {
+        } elseif (is_string($value)) {
             $html = '<b>' . FormSimple::sword('setting_' . $setting, null, $setting) . '</b><br />';
             $html .= '<i>' . FormSimple::sword('setting_' . $setting . '_sub', null, '') . '</i><div>';
             $html .= '<textarea name="' . $name . '[' . $setting . ']" style="width:100%;height:40px">';
             $html .= $value . '</textarea>';
-        }
-        elseif(is_numeric($value))
-        {
+        } elseif (is_numeric($value)) {
             $html = '<input type="text" name="' . $name . '[' . $setting . ']" ';
             $html .= 'value="' . $value . '" style="float:right;" />';
-        }
-        elseif(is_array($value))
-        {
+        } elseif (is_array($value)) {
             $html = '<select name="' . $name . '[' . $setting . ']" style="float:right;">';
-            foreach($value['values'] as $key => $val)
-            {
+            foreach ($value['values'] as $key => $val) {
                 $html .= '<option value="' . $key . '" ';
-                if($value['selected'] == $key) $html .= 'selected="selected" ';
+                if ($value['selected'] == $key) {
+                    $html .= 'selected="selected" ';
+                }
                 $html .= '/>' . $val . '</option>';
             }
             $html .= '</select>';
         }
         // Title after field because of float:right
-        if(!is_string($value))
-        {
+        if (!is_string($value)) {
             $html .= '<b>' . FormSimple::sword('setting_' . $setting, null, $setting) . '</b><br />';
             $html .= '<i>' . FormSimple::sword('setting_' . $setting . '_sub', null, '') . '</i><div>';
         }
@@ -835,43 +802,32 @@ class FormSimple
      */
     private static function configEdit($file_path, $name, $old_values, $new_values)
     {
-        if(file_exists($file_path))
-        {
+        if (file_exists($file_path)) {
             $content = file_get_contents($file_path);
-            foreach($old_values as $setting => $value)
-            {
+            foreach ($old_values as $setting => $value) {
                 $setting = preg_quote($setting);
-                if(isset($_POST[$name][$setting]))
+                if(isset($_POST[$name][$setting])) {
                     $new = $_POST[$name][$setting];
-                else $new = $value;
+                } else $new = $value;
 
-                if(is_bool($value))
-                {
+                if (is_bool($value)) {
                     $pattern = '`(\'' . $setting . '\' => )' . ($value ? 'true' : 'false') . '(,)`';
                     $new = isset($_POST[$name][$setting]) ? 'true' : 'false';
-                }
-                elseif(is_string($value))
-                {
+                } elseif (is_string($value)) {
                     $pattern = '`(\'' . $setting . '\' => \')' . preg_quote($value) . '(\',)`';
-                }
-                elseif(is_numeric($value))
-                {
+                } elseif (is_numeric($value)) {
                     $pattern = '`(\'' . $setting . '\' => )' . $value . '(,)`';
-                }
-                elseif(is_array($value))
-                {
+                } elseif (is_array($value)) {
                     $pattern = '`(\'' . $setting . '\' => array\(\s*\'selected\' => \')' . preg_quote($value['selected']) . '(\',)`';
                 }
                 $content = preg_replace($pattern, '${1}' . $new . '$2', $content);
             }
 
-            if($file = fopen($file_path, 'w'))
-            {
+            if ($file = fopen($file_path, 'w')) {
                 fwrite($file, $content);
                 fclose($file);
                 return true;
-            }
-            else return false;
+            } else return false;
         }
     }
 
@@ -957,9 +913,11 @@ class FormSimple
  * Unset each $a[array[$i]]
  */
 function unsetR($a, $i) {
-    foreach($a as $k=>$v)
-        if(isset($v[$i]))
+    foreach($a as $k=>$v) {
+        if(isset($v[$i])) {
             unset($a[$k][$i]);
+        }
+    }
     return $a;
 }
 ?>

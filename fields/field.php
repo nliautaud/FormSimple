@@ -43,8 +43,7 @@ abstract class Field
         $this->placeholder($content_type == '=<' ? $content : '');
         $this->locked($content_type == '=>' ? true : false);
         $this->required($punctuation == '!' ? true : false);
-        if($punctuation == '?')
-        {
+        if ($punctuation == '?') {
             $this->hidden(true);
             $this->locked(true);
         }
@@ -65,23 +64,19 @@ abstract class Field
     final public function checkContent()
     {
         // empty and required
-        if(empty($this->value) && $this->required)
-        {
+        if (empty($this->value) && $this->required) {
             $this->error('field_required');
             return false;
         }
         // not empty but not valid
-        if(
-            !empty($this->value) &&
-            ($this->isBlacklisted()
-            || !$this->isValid())
+        if (!empty($this->value)
+            && ($this->isBlacklisted() || !$this->isValid())
         ) {
             // use specific keyword if translation exists, or use generic
             $lang = FormSimple::sword('field_error_' . $this->type(), null, '');
-            if(!empty($lang))
+            if (!empty($lang)) {
                 $this->error('field_error_' . $this->type());
-            else
-                $this->error('field_invalid');
+            } else $this->error('field_invalid');
             return false;
         }
         $this->error('');
@@ -99,20 +94,23 @@ abstract class Field
      */
     final public function isBlacklisted()
     {
-        if(is_array($this->value) || empty($this->value)) return false;
+        if (is_array($this->value) || empty($this->value)) {
+            return false;
+        }
 
         $list = FormSimple::setting($this->type . '_field_filter');
         $type = FormSimple::setting($this->type . '_field_filter_type');
 
-        if($list === null || $type === null) return false;
+        if ($list === null || $type === null) return false;
 
         $type = $type['selected'];
         $value = preg_quote($this->value);
 
         $found = preg_match('`' . $value . '`', $list);
 
-        if($type == 'b') return $found ? true : false;
-        else return $found ? false : true;
+        if ($type == 'b') {
+            return $found ? true : false;
+        } else return $found ? false : true;
     }
 
     /**
@@ -143,11 +141,11 @@ abstract class Field
     final public function html()
     {
         $html = '<label class="field ' . $this->type;
-        if($this->required) $html .= ' required';
-        if($this->locked) $html .= ' disabled';
-        if($this->error) $html .= ' error';
+        if ($this->required) $html .= ' required';
+        if ($this->locked)   $html .= ' disabled';
+        if ($this->error)    $html .= ' error';
         $html .= '"';
-        if($this->hidden) $html .= ' style="display:none;"';
+        if ($this->hidden)   $html .= ' style="display:none;"';
         $html .= '>';
 
         $html .= '<div class="title">';
@@ -157,8 +155,7 @@ abstract class Field
         $html .= $this->htmlContent();
 
         $error = $this->error;
-        if(!empty($error))
-        {
+        if (!empty($error)) {
             $html .= '<span class="error">';
             $html .= FormSimple::sword($error, $this->lang);
             $html .= '</span>';
@@ -244,8 +241,7 @@ abstract class Field
     final public function value($value = null)
     {
         if($value === null) return $this->value;
-        if(is_string($value) || is_array($value))
-        {
+        if (is_string($value) || is_array($value)) {
             $this->value = $value;
         }
     }
@@ -266,10 +262,8 @@ abstract class Field
             $tmp_values[$key][2] = '';
 
         // set new values selections
-        foreach($values as $value)
-        {
-            foreach($tmp_values as $key => $val)
-            {
+        foreach ($values as $value) {
+            foreach ($tmp_values as $key => $val) {
                 if(trim($val[1]) == trim($value))
                     $tmp_values[$key][2] = 'selected';
             }

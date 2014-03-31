@@ -12,8 +12,7 @@ class Url extends Text
         $this->placeholder($content_type == '=<' ? $content : '');
         $this->locked($content_type == '=>' ? true : false);
         $this->required($punctuation == '!' ? true : false);
-        if($punctuation == '?')
-        {
+        if ($punctuation == '?') {
             $this->hidden(true);
             $this->locked(true);
         }
