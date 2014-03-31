@@ -37,7 +37,7 @@ abstract class Action
 
     final protected function error($keyword)
     {
-        $this->form->completed(False);
+        $this->form->completed(false);
         $this->form->message($this->word($keyword));
     }
 
@@ -68,7 +68,7 @@ abstract class Action
         require_once FSACTIONSPATH . $this->name() . '/config.php';
         $s = $$settings;
         if(isset($s[$key])) return $s[$key];
-        else return Null;
+        else return null;
     }
 
     /**

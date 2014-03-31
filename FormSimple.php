@@ -47,9 +47,9 @@ class FormSimple
         $this->fields = array();
         $this->params = array();
 
-        $this->visible = True;
-        $this->enabled = True;
-        $this->completed = False;
+        $this->visible = true;
+        $this->enabled = true;
+        $this->completed = false;
 
         $this->message = '';
         $this->fieldset = -1;
@@ -240,14 +240,14 @@ class FormSimple
 
                 if(!$field->checkContent())
                 {
-                    $errors = True;
+                    $errors = true;
                 }
             }
             // Security tokens
             if(FormSimple::setting('enable_token') && !$this->tokenCompare())
             {
                 $this->message('form_error_token');
-                $this->visible(False);
+                $this->visible(false);
             }
             elseif(isset($errors))
             {
@@ -261,14 +261,14 @@ class FormSimple
                     $this->message('form_error_disabled');
                 }
                 // No action is defined
-                elseif($this->action() == Null)
+                elseif($this->action() == null)
                 {
                     $this->message('form_error_action');
                 }
                 // Execute action
                 else
                 {
-                    $this->completed(True);
+                    $this->completed(true);
                     $this->action->exec();
                 }
             }
@@ -283,9 +283,9 @@ class FormSimple
      * instanciate action class as form action.
      * @param string $class
      */
-    public function action($class = Null)
+    public function action($class = null)
     {
-        if($class === Null) return $this->action;
+        if($class === null) return $this->action;
 
         $file = FSACTIONSPATH . $class . '/' . $class . '.php';
         if(file_exists($file))
@@ -372,14 +372,14 @@ class FormSimple
      */
     public static function sword(
         $key,
-        $lang = Null,
-        $default = Null,
+        $lang = null,
+        $default = null,
         $langs_path = FSLANGSPATH
     ){
         if(empty($key)) return '';
 
         // use setting defined language if not given
-        if($lang === Null)
+        if($lang === null)
         {
             $langs = FormSimple::setting('langs');
             $lang = $langs['selected'];
@@ -402,7 +402,7 @@ class FormSimple
         }
 
         // return formated default value if exists
-        if($default !== Null)
+        if($default !== null)
         {
             return ucfirst(str_replace('_', ' ', $default));
         }
@@ -421,7 +421,7 @@ class FormSimple
      */
     private function tokenSet()
     {
-        $_SESSION['FormSimple_token'] = uniqid(md5(microtime()), True);
+        $_SESSION['FormSimple_token'] = uniqid(md5(microtime()), true);
     }
     /*
      * Get the token in SESSION.
@@ -443,8 +443,8 @@ class FormSimple
     {
         if(isset($_POST['FormSimple_form']['token'])
         && $this->tokenGet() === $_POST['FormSimple_form']['token'])
-            return True;
-        else return False;
+            return true;
+        else return false;
     }
 
 
@@ -491,12 +491,12 @@ class FormSimple
      * @param boolean $include include class if possible
      * @return boolean
      */
-    public static function isFieldClass($className, $include = False)
+    public static function isFieldClass($className, $include = false)
     {
         $file = FSFIELDSPATH . $className . '.php';
         if($include && file_exists($file)) require_once $file;
-        if(class_exists($className)) return True;
-        return False;
+        if(class_exists($className)) return true;
+        return false;
     }
 
 
@@ -552,7 +552,7 @@ class FormSimple
      */
     public function parseParameters($parameters, $separator = ',')
     {
-        if($parameters === Null) return False;
+        if($parameters === null) return false;
 
         // assure encoding
         $parameters = str_replace('&nbsp;', ' ', $parameters);
@@ -571,14 +571,14 @@ class FormSimple
         $fieldsnbr = 0;
         foreach($parameters as $p)
         {
-            if(!FormSimple::isFieldClass($p[1], True))
+            if(!FormSimple::isFieldClass($p[1], true))
             {
                 $this->addParam($p[1]);
             }
             else $fieldsnbr++;
         }
         // use action default fields if there is no fields in parameters
-        if($fieldsnbr == 0 && $this->action != Null)
+        if($fieldsnbr == 0 && $this->action != null)
         {
             $default = $this->action->setting('default_params');
             $this->parseParameters($default);
@@ -588,7 +588,7 @@ class FormSimple
         foreach($parameters as $p)
         {
             $class = $p[1];
-            if(FormSimple::isFieldClass($class, True))
+            if(FormSimple::isFieldClass($class, true))
             {
                 $field = new $class($id);
                 $field->construct($p[2], $p[3], $p[4], $p[5]);
@@ -596,7 +596,7 @@ class FormSimple
                 $id++;
             }
         }
-        return True;
+        return true;
     }
 
     /**
@@ -619,7 +619,7 @@ class FormSimple
     /**
      * Check if a new version exists.
      *
-     * @return mixed new version number if exists, or False.
+     * @return mixed new version number if exists, or false.
      */
     public static function existsNewVersion()
     {
@@ -631,10 +631,10 @@ class FormSimple
             if(isset($last_r[$key]))
             {
                 if($val < $last_r[$key]) return $last;
-                if($val > $last_r[$key]) return False;
+                if($val > $last_r[$key]) return false;
             }
         }
-        return False;
+        return false;
     }
     /**
      * CONFIGURATION
@@ -791,8 +791,8 @@ class FormSimple
         }
         elseif(is_string($value))
         {
-            $html = '<b>' . FormSimple::sword('setting_' . $setting, Null, $setting) . '</b><br />';
-            $html .= '<i>' . FormSimple::sword('setting_' . $setting . '_sub', Null, '') . '</i><div>';
+            $html = '<b>' . FormSimple::sword('setting_' . $setting, null, $setting) . '</b><br />';
+            $html .= '<i>' . FormSimple::sword('setting_' . $setting . '_sub', null, '') . '</i><div>';
             $html .= '<textarea name="' . $name . '[' . $setting . ']" style="width:100%;height:40px">';
             $html .= $value . '</textarea>';
         }
@@ -815,8 +815,8 @@ class FormSimple
         // Title after field because of float:right
         if(!is_string($value))
         {
-            $html .= '<b>' . FormSimple::sword('setting_' . $setting, Null, $setting) . '</b><br />';
-            $html .= '<i>' . FormSimple::sword('setting_' . $setting . '_sub', Null, '') . '</i><div>';
+            $html .= '<b>' . FormSimple::sword('setting_' . $setting, null, $setting) . '</b><br />';
+            $html .= '<i>' . FormSimple::sword('setting_' . $setting . '_sub', null, '') . '</i><div>';
         }
         $html .= '</div>';
         return $html;
@@ -847,8 +847,8 @@ class FormSimple
 
                 if(is_bool($value))
                 {
-                    $pattern = '`(\'' . $setting . '\' => )' . ($value ? 'True' : 'False') . '(,)`';
-                    $new = isset($_POST[$name][$setting]) ? 'True' : 'False';
+                    $pattern = '`(\'' . $setting . '\' => )' . ($value ? 'true' : 'false') . '(,)`';
+                    $new = isset($_POST[$name][$setting]) ? 'true' : 'false';
                 }
                 elseif(is_string($value))
                 {
@@ -869,9 +869,9 @@ class FormSimple
             {
                 fwrite($file, $content);
                 fclose($file);
-                return True;
+                return true;
             }
-            else return False;
+            else return false;
         }
     }
 
@@ -885,9 +885,9 @@ class FormSimple
     {
         return $this->id;
     }
-    public function lang($key = Null)
+    public function lang($key = null)
     {
-        if($key === Null) return $this->lang;
+        if($key === null) return $this->lang;
         if(is_string($key)) $this->lang = $key;
     }
 
@@ -925,31 +925,31 @@ class FormSimple
     }
 
 
-    public function visible($val = Null)
+    public function visible($val = null)
     {
-        if($val === Null) return $this->visible;
+        if($val === null) return $this->visible;
         if(is_bool($val)) $this->visible = $val;
     }
-    public function enabled($val = Null)
+    public function enabled($val = null)
     {
-        if($val === Null) return $this->enabled;
+        if($val === null) return $this->enabled;
         if(is_bool($val)) $this->enabled = $val;
     }
-    public function completed($val = Null)
+    public function completed($val = null)
     {
-        if($val === Null) return $this->completed;
+        if($val === null) return $this->completed;
         if(is_bool($val)) $this->completed = $val;
     }
 
 
-    public function message($val = Null)
+    public function message($val = null)
     {
-        if($val === Null) return $this->message;
+        if($val === null) return $this->message;
         if(is_string($val)) $this->message = $val;
     }
-    public function fieldset($val = Null)
+    public function fieldset($val = null)
     {
-        if($val === Null) return $this->fieldset;
+        if($val === null) return $this->fieldset;
         $this->fieldset = intval($val);
     }
 }

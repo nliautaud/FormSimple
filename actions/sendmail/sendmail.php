@@ -34,7 +34,7 @@ class Sendmail extends Action
     {
         $server = $_SERVER['SERVER_NAME'];
         $uri = $_SERVER['REQUEST_URI'];
-        $askcopy = False;
+        $askcopy = false;
 
         // title
         $html  = '<h2>' . $this->word('fromsite') . ' <i>' . $server . '</i></h2>';
@@ -51,7 +51,7 @@ class Sendmail extends Action
                 case 'name' : $name = $value; break;
                 case 'email': $email = $value; break;
                 case 'subject': $this->subject = $value; break;
-                case 'askcopy': $askcopy = True; break;
+                case 'askcopy': $askcopy = true; break;
             }
             if(!in_array($type, $skip) && !empty($value))
             {
@@ -98,7 +98,7 @@ class Sendmail extends Action
         }
         if(empty($email))
         {
-            $askcopy = False;
+            $askcopy = false;
             $email = $this->word('anonymous');
         }
         if(empty($this->subject))
@@ -156,7 +156,7 @@ class Sendmail extends Action
     private function completed()
     {
         $this->form->message($this->word('completed'));
-        $this->form->hide(True);
+        $this->form->hide(true);
     }
 
     /*
@@ -204,7 +204,7 @@ class Sendmail extends Action
     * @param string $protocol http:// by default
     * @return string the <a>
     */
-    function htmlLink($href, $title = False, $protocol = 'http://')
+    function htmlLink($href, $title = false, $protocol = 'http://')
     {
         if(!$title) $title = $href;
         return '<a href="' . $protocol . $href . '">' . $title . '</a>';

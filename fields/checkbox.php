@@ -14,12 +14,12 @@ class Checkbox extends Field
         $this->value(unset_r($values, 0));
 
         // set attributes
-        $this->locked($content_type == '=>;' ? True : False);
-        $this->required($punctuation == '!' ? True : False);
+        $this->locked($content_type == '=>;' ? true : false);
+        $this->required($punctuation == '!' ? true : false);
         if($punctuation == '?')
         {
-            $this->hidden(True);
-            $this->locked(True);
+            $this->hidden(true);
+            $this->locked(true);
         }
     }
 

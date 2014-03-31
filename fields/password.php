@@ -11,11 +11,11 @@ class Password extends Text
     ){
         $this->title($title);
         $this->required($content);
-        $this->locked($content_type == '=&gt;' ? True : False);
+        $this->locked($content_type == '=&gt;' ? true : false);
         if($punctuation == '?')
         {
-            $this->hidden(True);
-            $this->locked(True);
+            $this->hidden(true);
+            $this->locked(true);
         }
     }
 
@@ -26,8 +26,8 @@ class Password extends Text
     */
     public function isValid()
     {
-        if($this->value() == $this->required()) return True;
-        return False;
+        if($this->value() == $this->required()) return true;
+        return false;
     }
 }
 ?>

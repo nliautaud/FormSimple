@@ -10,8 +10,8 @@ class Phone extends Text
     public function isValid()
     {
         $pattern = '`^\+?[-0-9(). ]{6,}$$`i';
-        if(preg_match($pattern, $this->value())) return True;
-        else return False;
+        if(preg_match($pattern, $this->value())) return true;
+        else return false;
     }
 }
 ?>

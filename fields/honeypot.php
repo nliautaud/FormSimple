@@ -8,8 +8,8 @@ class Honeypot extends Text
      */
     public function isValid()
     {
-        if($this->value()) return False;
-        return True;
+        if($this->value()) return false;
+        return true;
     }
 }
 ?>

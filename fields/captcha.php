@@ -9,8 +9,8 @@ class Captcha extends Field
     {
         include_once FSPATH . 'fields/securimage/securimage.php';
         $s = new Securimage();
-        if(!$s->check($this->value())) return False;
-        return True;
+        if(!$s->check($this->value())) return false;
+        return true;
     }
 
     /**

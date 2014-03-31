@@ -16,7 +16,7 @@ abstract class Field
     final public function _Construct(
         $id,
         $title = '', $value = '', $placeholder = '',
-        $required = False, $hidden = False, $locked = False
+        $required = false, $hidden = false, $locked = false
     ){
         $this->id = $id;
         $this->type = strtolower(get_class($this));
@@ -41,12 +41,12 @@ abstract class Field
         $this->title($title);
         $this->value($content_type == '=<' ? '' : $content);
         $this->placeholder($content_type == '=<' ? $content : '');
-        $this->locked($content_type == '=>' ? True : False);
-        $this->required($punctuation == '!' ? True : False);
+        $this->locked($content_type == '=>' ? true : false);
+        $this->required($punctuation == '!' ? true : false);
         if($punctuation == '?')
         {
-            $this->hidden(True);
-            $this->locked(True);
+            $this->hidden(true);
+            $this->locked(true);
         }
     }
 
@@ -68,7 +68,7 @@ abstract class Field
         if(empty($this->value) && $this->required)
         {
             $this->error('field_required');
-            return False;
+            return false;
         }
         // not empty but not valid
         if(
@@ -77,15 +77,15 @@ abstract class Field
             || !$this->isValid())
         ) {
             // use specific keyword if translation exists, or use generic
-            $lang = FormSimple::sword('field_error_' . $this->type(), Null, '');
+            $lang = FormSimple::sword('field_error_' . $this->type(), null, '');
             if(!empty($lang))
                 $this->error('field_error_' . $this->type());
             else
                 $this->error('field_invalid');
-            return False;
+            return false;
         }
         $this->error('');
-        return True;
+        return true;
     }
     /**
      * Check if field value is blacklisted.
@@ -99,20 +99,20 @@ abstract class Field
      */
     final public function isBlacklisted()
     {
-        if(is_array($this->value) || empty($this->value)) return False;
+        if(is_array($this->value) || empty($this->value)) return false;
 
         $list = FormSimple::setting($this->type . '_field_filter');
         $type = FormSimple::setting($this->type . '_field_filter_type');
 
-        if($list === Null || $type === Null) return False;
+        if($list === null || $type === null) return false;
 
         $type = $type['selected'];
         $value = preg_quote($this->value);
 
         $found = preg_match('`' . $value . '`', $list);
 
-        if($type == 'b') return $found ? True : False;
-        else return $found ? False : True;
+        if($type == 'b') return $found ? true : false;
+        else return $found ? false : true;
     }
 
     /**
@@ -127,7 +127,7 @@ abstract class Field
      */
     public function isValid()
     {
-        return True;
+        return true;
     }
 
     /**
@@ -223,27 +223,27 @@ abstract class Field
      */
 
 
-    final public function lang($lang = Null)
+    final public function lang($lang = null)
     {
-        if($lang === Null) return $this->lang;
+        if($lang === null) return $this->lang;
         if(is_string($lang)) $this->lang = $lang;
     }
 
-    final public function type($type = Null)
+    final public function type($type = null)
     {
-        if($type === Null) return $this->type;
+        if($type === null) return $this->type;
         if(is_string($type)) $this->type = $type;
     }
 
-    final public function title($title = Null)
+    final public function title($title = null)
     {
-        if($title === Null) return $this->title;
+        if($title === null) return $this->title;
         if(is_string($title)) $this->title = $title;
     }
 
-    final public function value($value = Null)
+    final public function value($value = null)
     {
-        if($value === Null) return $this->value;
+        if($value === null) return $this->value;
         if(is_string($value) || is_array($value))
         {
             $this->value = $value;
@@ -255,7 +255,7 @@ abstract class Field
      */
     final public function valueSelection($values)
     {
-        if(!is_array($this->value)) return False;
+        if(!is_array($this->value)) return false;
 
         // given values need to be an array
         if(!is_array($values)) $values = array($values);
@@ -276,32 +276,32 @@ abstract class Field
         }
         $this->value($tmp_values);
     }
-    final public function placeholder($val = Null)
+    final public function placeholder($val = null)
     {
-        if($val === Null) return $this->placeholder;
+        if($val === null) return $this->placeholder;
         if(is_string($val)) $this->placeholder = $val;
     }
 
-    final public function required($val = Null)
+    final public function required($val = null)
     {
-        if($val === Null) return $this->required;
+        if($val === null) return $this->required;
         if(is_bool($val) || is_string($val))
             $this->required = $val;
     }
-    final public function hidden($hidden = Null)
+    final public function hidden($hidden = null)
     {
-        if($hidden === Null) return $this->hidden;
+        if($hidden === null) return $this->hidden;
         if(is_bool($hidden)) $this->hidden = $hidden;
     }
-    final public function locked($locked = Null)
+    final public function locked($locked = null)
     {
-        if($locked === Null) return $this->locked;
+        if($locked === null) return $this->locked;
         if(is_bool($locked)) $this->locked = $locked;
     }
 
-    final public function error($val = Null)
+    final public function error($val = null)
     {
-        if($val === Null) return $this->error;
+        if($val === null) return $this->error;
         if(is_string($val)) $this->error = $val;
     }
 }

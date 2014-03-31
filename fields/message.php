@@ -9,8 +9,8 @@ class Message extends Textarea
     public function isValid()
     {
         $size = strlen($this->value());
-        if($size > 100) return True;
-        return False;
+        if($size > 100) return true;
+        return false;
     }
 }
 ?>

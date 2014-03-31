@@ -10,12 +10,12 @@ class Url extends Text
         $this->title($title);
         $this->value($content_type == '=<' ? '' : $content);
         $this->placeholder($content_type == '=<' ? $content : '');
-        $this->locked($content_type == '=>' ? True : False);
-        $this->required($punctuation == '!' ? True : False);
+        $this->locked($content_type == '=>' ? true : false);
+        $this->required($punctuation == '!' ? true : false);
         if($punctuation == '?')
         {
-            $this->hidden(True);
-            $this->locked(True);
+            $this->hidden(true);
+            $this->locked(true);
         }
 
         // Add http:// if there is no placeholder.
@@ -32,8 +32,8 @@ class Url extends Text
             "`^(?:https?:\/\/(?:www\.)?|www\.)" .
             "(?:(?:[a-z0-9][-._]?){0,62}[a-z0-9])+" .
             "\.[a-z0-9]{2,6}$`i";
-        if(preg_match($pattern, $this->value())) return True;
-        else return False;
+        if(preg_match($pattern, $this->value())) return true;
+        else return false;
     }
 }
 ?>

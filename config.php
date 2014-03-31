@@ -9,11 +9,11 @@
  * @package FormSimple
  */
 $FormSimple_settings = array(
-    'visible' => True,
-    'enable' => True,
-    'token' => True,
-    'style' => True,
-    'debug' => False,
+    'visible' => true,
+    'enable' => true,
+    'token' => true,
+    'style' => true,
+    'debug' => false,
 
     'langs' => array(
         'selected' => '',
