@@ -27,15 +27,14 @@ class FormSimple
 
     private $message;
     private $fieldset;
-    /*
+    /**
      * FormSimple version.
      */
     public static function version() {return '1.0';}
 
-    /**
+    /*
      * INITIALISATION
      */
-
 
     public function __construct()
     {
@@ -55,7 +54,7 @@ class FormSimple
         $this->fieldset = -1;
     }
 
-    /*
+    /**
      * Define the paths and url constants.
      */
     private static function defineConstants()
@@ -78,7 +77,7 @@ class FormSimple
         define('FSVERSIONURL',  'https://github.com/nliautaud/FormSimple');
     }
 
-    /*
+    /**
      * Define the form ID according
      * to forms count in page.
      */
@@ -91,12 +90,12 @@ class FormSimple
         $this->id = $FSCOUNT;
     }
 
-    /**
+    /*
      * OUTPUT
      */
 
 
-    /*
+    /**
      * Return the html display of the form
      * @return string the <form>
      */
@@ -155,7 +154,7 @@ class FormSimple
         return $html;
     }
 
-    /*
+    /**
      * Return an html display of a message.
      * @return string the <div>
      */
@@ -168,7 +167,7 @@ class FormSimple
         return $msg;
     }
 
-    /*
+    /**
      * Return an html display of a box report.
      * @return string the <div>
      */
@@ -213,7 +212,7 @@ class FormSimple
     }
 
 
-    /**
+    /*
      * POST - ACTION
      */
 
@@ -311,7 +310,8 @@ class FormSimple
         return $actions;
     }
 
-    /**
+
+    /*
      * LANG
      */
 
@@ -393,19 +393,20 @@ class FormSimple
         return ucfirst(str_replace('_', ' ', $key));
     }
 
-    /**
+
+    /*
      * TOKENS
      */
 
 
-    /*
+    /**
      * Create an unique hash in SESSION.
      */
     private function tokenSet()
     {
         $_SESSION['FormSimple_token'] = uniqid(md5(microtime()), true);
     }
-    /*
+    /**
      * Get the token in SESSION.
      *
      * @return string
@@ -417,7 +418,7 @@ class FormSimple
         }
         return $_SESSION['FormSimple_token'];
     }
-    /*
+    /**
      * Compare the POST token to the SESSION one.
      *
      * @return boolean
@@ -458,7 +459,7 @@ class FormSimple
         return $data;
     }
 
-    /*
+    /**
      * Reset all fields values and errors
      */
     public function reset()
@@ -581,7 +582,8 @@ class FormSimple
         return true;
     }
 
-    /**
+
+    /*
      * VERSION - UPDATE
      */
 
@@ -621,7 +623,9 @@ class FormSimple
         }
         return false;
     }
-    /**
+
+
+    /*
      * CONFIGURATION
      */
 
@@ -832,7 +836,7 @@ class FormSimple
     }
 
 
-    /**
+    /*
      * GETTERS / SETTERS
      */
 
