@@ -31,10 +31,10 @@ abstract class Field
     }
     /**
      * Define field attributes from tag syntax.
-	 *
-	 * This method is often overwritten by subclasses.
-	 *
-	 * @see FormSimple::parseParameters()
+     *
+     * This method is often overwritten by subclasses.
+     *
+     * @see FormSimple::parseParameters()
      */
     public function construct($punctuation, $title, $content_type, $content)
     {
@@ -55,33 +55,33 @@ abstract class Field
      *
      * Check if field is empty and required or
      * not empty but not valid.
-	 *
+     *
      * @return bool check status
-	 *
-	 * @see is_valid
-	 * @see is_blacklisted
-	 * @see FormSimple::post()
+     *
+     * @see is_valid
+     * @see is_blacklisted
+     * @see FormSimple::post()
      */
     final public function checkContent()
     {
-		// empty and required
+        // empty and required
         if(empty($this->value) && $this->required)
-		{
+        {
             $this->error('field_required');
             return False;
         }
-		// not empty but not valid
+        // not empty but not valid
         if(
             !empty($this->value) &&
             ($this->isBlacklisted()
             || !$this->isValid())
         ) {
-			// use specific keyword if translation exists, or use generic
-			$lang = FormSimple::sword('field_error_' . $this->type(), Null, '');
-			if(!empty($lang))
-				$this->error('field_error_' . $this->type());
-			else
-				$this->error('field_invalid');
+            // use specific keyword if translation exists, or use generic
+            $lang = FormSimple::sword('field_error_' . $this->type(), Null, '');
+            if(!empty($lang))
+                $this->error('field_error_' . $this->type());
+            else
+                $this->error('field_invalid');
             return False;
         }
         $this->error('');
@@ -91,11 +91,11 @@ abstract class Field
      * Check if field value is blacklisted.
      *
      * Search field value in setting filter and return
-	 * bool according to the result and the filter type.
-	 *
+     * bool according to the result and the filter type.
+     *
      * @return boolean
-	 *
-	 * @see check_content
+     *
+     * @see check_content
      */
     final public function isBlacklisted()
     {
@@ -104,7 +104,7 @@ abstract class Field
         $list = FormSimple::setting($this->type . '_field_filter');
         $type = FormSimple::setting($this->type . '_field_filter_type');
 
-		if($list === Null || $type === Null) return False;
+        if($list === Null || $type === Null) return False;
 
         $type = $type['selected'];
         $value = preg_quote($this->value);
@@ -117,13 +117,13 @@ abstract class Field
 
     /**
      * Define if field value is valid.
-	 *
+     *
      * Valid mean different things depending on field type :
-	 * this method is often overwritten by subclasses.
-	 *
+     * this method is often overwritten by subclasses.
+     *
      * @return boolean
-	 *
-	 * @see check_content
+     *
+     * @see check_content
      */
     public function isValid()
     {
@@ -134,71 +134,71 @@ abstract class Field
      * Return the html display of the field in a prepared <div>.
      *
      * Manage div class and error message.
-	 *
+     *
      * @return string the <div>
-	 *
-	 * @see html_content
-	 * @see FormSimple::html()
+     *
+     * @see html_content
+     * @see FormSimple::html()
      */
     final public function html()
-	{
-		$html = '<label class="field ' . $this->type;
-		if($this->required) $html .= ' required';
-		if($this->locked) $html .= ' disabled';
-		if($this->error) $html .= ' error';
-		$html .= '"';
-		if($this->hidden) $html .= ' style="display:none;"';
-		$html .= '>';
+    {
+        $html = '<label class="field ' . $this->type;
+        if($this->required) $html .= ' required';
+        if($this->locked) $html .= ' disabled';
+        if($this->error) $html .= ' error';
+        $html .= '"';
+        if($this->hidden) $html .= ' style="display:none;"';
+        $html .= '>';
 
-		$html .= '<div class="title">';
-		$html .= $this->htmlTitle();
-		$html .= '</div>';
+        $html .= '<div class="title">';
+        $html .= $this->htmlTitle();
+        $html .= '</div>';
 
-		$html .= $this->htmlContent();
+        $html .= $this->htmlContent();
 
-		$error = $this->error;
-		if(!empty($error))
-		{
-			$html .= '<span class="error">';
-			$html .= FormSimple::sword($error, $this->lang);
-			$html .= '</span>';
-		}
-		$html .= '</label>';
-		return $html;
-	}
+        $error = $this->error;
+        if(!empty($error))
+        {
+            $html .= '<span class="error">';
+            $html .= FormSimple::sword($error, $this->lang);
+            $html .= '</span>';
+        }
+        $html .= '</label>';
+        return $html;
+    }
 
     /**
      * Return the html title of the field.
-	 *
+     *
      * @return string
-	 *
-	 * @see html
+     *
+     * @see html
      */
     public function htmlTitle()
-	{
+    {
         if(!empty($this->title)) return $this->title;
 
         return FormSimple::sword('field_title_' . $this->type, $this->lang, $this->type);
-	}
+    }
 
     /**
      * Return the html content of the field.
-	 *
+     *
      * @return string
-	 *
-	 * @see html
+     *
+     * @see html
      */
     abstract public function htmlContent();
 
     /**
      * Return the field input identifier.
-	 *
-	 * Used to link label and input.
-	 *
+     *
+     * Used to link label and input.
+     *
      * @return string
-	 *
-	 * @see html_label
-	 * @see html_content
+     *
+     * @see html_label
+     * @see html_content
      */
     final protected function htmlId()
     {
@@ -207,10 +207,10 @@ abstract class Field
 
     /**
      * Return the field input name.
-	 *
+     *
      * @return string
-	 *
-	 * @see html_content
+     *
+     * @see html_content
      */
     final protected function htmlName()
     {

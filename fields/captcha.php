@@ -15,10 +15,10 @@ class Captcha extends Field
 
     /**
      * Return the html content of the field.
-	 *
+     *
      * @return string the <div>
-	 *
-	 * @see html
+     *
+     * @see html
      */
     public function htmlContent()
     {

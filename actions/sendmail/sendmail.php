@@ -40,18 +40,18 @@ class Sendmail extends Action
         $html  = '<h2>' . $this->word('fromsite') . ' <i>' . $server . '</i></h2>';
 
         // fields
-		$skip = explode(',', $this->setting('skip_fields'));
+        $skip = explode(',', $this->setting('skip_fields'));
         foreach($this->form->fields() as $field)
         {
             $type  = $field->type();
             $value = $field->value();
             $title = $field->title();
-			switch($type)
-			{
-				case 'name' : $name = $value; break;
-				case 'email': $email = $value; break;
-				case 'subject': $this->subject = $value; break;
-				case 'askcopy': $askcopy = True; break;
+            switch($type)
+            {
+                case 'name' : $name = $value; break;
+                case 'email': $email = $value; break;
+                case 'subject': $this->subject = $value; break;
+                case 'askcopy': $askcopy = True; break;
             }
             if(!in_array($type, $skip) && !empty($value))
             {
@@ -144,7 +144,7 @@ class Sendmail extends Action
                 {
                     mail($email, $this->subject, $this->body, $this->headers);
                 }
-				$this->completed();
+                $this->completed();
             }
             else $this->error('error');
         }
@@ -155,8 +155,8 @@ class Sendmail extends Action
      */
     private function completed()
     {
-		$this->form->message($this->word('completed'));
-		$this->form->hide(True);
+        $this->form->message($this->word('completed'));
+        $this->form->hide(True);
     }
 
     /*
@@ -183,18 +183,18 @@ class Sendmail extends Action
             "`(?:(?:[a-z0-9][-.+_=']?)*[a-z0-9])+" .
             "@(?:(?:[a-z0-9][-._]?){0,62}[a-z0-9])+" .
             "\.[a-z0-9]{2,6}`i";
-		foreach(func_get_args() as $arg)
-		{
-			if(is_array($arg)) $arg = implode($arg, ',');
-			preg_match_all($email_pattern, $arg, $targets);
-			$targets = implode($targets[0], ',');
-			if(!empty($targets))
-			{
-				if(!isset($all_targets)) $all_targets = $targets;
-				else $all_targets .= ',' . $targets;
-			}
-		}
-		return $all_targets;
+        foreach(func_get_args() as $arg)
+        {
+            if(is_array($arg)) $arg = implode($arg, ',');
+            preg_match_all($email_pattern, $arg, $targets);
+            $targets = implode($targets[0], ',');
+            if(!empty($targets))
+            {
+                if(!isset($all_targets)) $all_targets = $targets;
+                else $all_targets .= ',' . $targets;
+            }
+        }
+        return $all_targets;
     }
 
     /*

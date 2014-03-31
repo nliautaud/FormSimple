@@ -12,7 +12,7 @@ $FormSimple_settings = array(
     'visible' => True,
     'enable' => True,
     'token' => True,
-	'style' => True,
+    'style' => True,
     'debug' => False,
 
     'langs' => array(

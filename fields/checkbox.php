@@ -25,33 +25,33 @@ class Checkbox extends Field
 
     /**
      * Return the html content of the field.
-	 * Create the multiple inputs according to the multiple values.
-	 *
+     * Create the multiple inputs according to the multiple values.
+     *
      * @return string
-	 *
-	 * @see html
+     *
+     * @see html
      */
     public function htmlContent()
     {
-		$html = '';
+        $html = '';
         if(is_array($this->value()))
-		{
+        {
             $html .= '<fieldset>';
-			foreach($this->value() as $i => $arr)
-			{
-				$html .= '<div class="' . $this->type() . '">';
-				$html .= '<input id="' . $this->htmlId() . '_option' . $i . '" ';
-				$html .= 'type="' . $this->type() . '" ';
-				$html .= 'name="' . $this->htmlName() . '" ';
-				$html .= 'value="' . $arr[1] . '" ';
-				if($this->locked()) $html .= 'disabled="disabled" ';
-				if(isset($arr[2]) && $arr[2] == 'selected')
-					$html .= 'checked ';
-				$html .= '/>' . $arr[1];
-				$html .= '</div>';
-			}
+            foreach($this->value() as $i => $arr)
+            {
+                $html .= '<div class="' . $this->type() . '">';
+                $html .= '<input id="' . $this->htmlId() . '_option' . $i . '" ';
+                $html .= 'type="' . $this->type() . '" ';
+                $html .= 'name="' . $this->htmlName() . '" ';
+                $html .= 'value="' . $arr[1] . '" ';
+                if($this->locked()) $html .= 'disabled="disabled" ';
+                if(isset($arr[2]) && $arr[2] == 'selected')
+                    $html .= 'checked ';
+                $html .= '/>' . $arr[1];
+                $html .= '</div>';
+            }
             $html .= '</fieldset>';
-		}
+        }
 
         return $html;
     }

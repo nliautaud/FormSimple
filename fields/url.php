@@ -18,8 +18,8 @@ class Url extends Text
             $this->locked(True);
         }
 
-		// Add http:// if there is no placeholder.
-		if(!$this->placeholder()) $this->placeholder('http://');
+        // Add http:// if there is no placeholder.
+        if(!$this->placeholder()) $this->placeholder('http://');
     }
 
     /**
@@ -29,9 +29,9 @@ class Url extends Text
     public function isValid()
     {
         $pattern =
-			"`^(?:https?:\/\/(?:www\.)?|www\.)" .
-			"(?:(?:[a-z0-9][-._]?){0,62}[a-z0-9])+" .
-			"\.[a-z0-9]{2,6}$`i";
+            "`^(?:https?:\/\/(?:www\.)?|www\.)" .
+            "(?:(?:[a-z0-9][-._]?){0,62}[a-z0-9])+" .
+            "\.[a-z0-9]{2,6}$`i";
         if(preg_match($pattern, $this->value())) return True;
         else return False;
     }

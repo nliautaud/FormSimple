@@ -63,12 +63,12 @@ abstract class Action
      */
     public function setting($key)
     {
-		$settings = 'FormSimple_' . $this->name() . '_settings';
+        $settings = 'FormSimple_' . $this->name() . '_settings';
         global $$settings;
         require_once FSACTIONSPATH . $this->name() . '/config.php';
-		$s = $$settings;
+        $s = $$settings;
         if(isset($s[$key])) return $s[$key];
-		else return Null;
+        else return Null;
     }
 
     /**

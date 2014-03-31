@@ -107,46 +107,46 @@ class FormSimple
         // debug
         if(FormSimple::setting('debug')) $html .= $this->htmlDebug();
 
-		// message
+        // message
         $html .= $this->htmlMessage(
-			$this->word($this->message),
-			$this->completed ? 'confirm' : 'error');
+            $this->word($this->message),
+            $this->completed ? 'confirm' : 'error');
 
-		// form
+        // form
         if(FormSimple::setting('visible') && $this->visible)
-		{
-			$html .= '<form method="post" ';
-			$html .= 'action="#FormSimple' . $this->id . '" ';
-			$html .= 'class="' . $this->action->name() . '" ';
-			$html .= 'autocomplete="off" >';
+        {
+            $html .= '<form method="post" ';
+            $html .= 'action="#FormSimple' . $this->id . '" ';
+            $html .= 'class="' . $this->action->name() . '" ';
+            $html .= 'autocomplete="off" >';
 
-			foreach($this->fields as $id => $field)
-			{
-				// field
-				if($field->type() != 'fieldset')
-				{
-					$html .= $field->html();
-				}
-				// fieldset
-				else
-				{
-					if($this->fieldset() > 0) $html .= '</fieldset>';
-					$html .= '<fieldset>';
-					if($field->title())
-						$html .= '<legend>' . $field->title() . '</legend>';
-					$this->fieldset = $field->value();
-				}
-				if($this->fieldset == 0) $html.= '</fieldset>';
-				if($this->fieldset > -1) $this->fieldset--;
-			}
-			// id, token and submit
-			$html .= '<div class="field submit">';
-			$html .= '<input type="hidden" name="FormSimple_form[id]" value="' . $this->id . '" />';
-			$html .= '<input type="hidden" name="FormSimple_form[token]" value="' . $this->tokenGet() . '" />';
-			$html .= '<input type="submit" value="' . $this->word('btn_send') . '" /></div>';
-			$html .= '</form>';
-		}
-		$html .= '</div>';
+            foreach($this->fields as $id => $field)
+            {
+                // field
+                if($field->type() != 'fieldset')
+                {
+                    $html .= $field->html();
+                }
+                // fieldset
+                else
+                {
+                    if($this->fieldset() > 0) $html .= '</fieldset>';
+                    $html .= '<fieldset>';
+                    if($field->title())
+                        $html .= '<legend>' . $field->title() . '</legend>';
+                    $this->fieldset = $field->value();
+                }
+                if($this->fieldset == 0) $html.= '</fieldset>';
+                if($this->fieldset > -1) $this->fieldset--;
+            }
+            // id, token and submit
+            $html .= '<div class="field submit">';
+            $html .= '<input type="hidden" name="FormSimple_form[id]" value="' . $this->id . '" />';
+            $html .= '<input type="hidden" name="FormSimple_form[token]" value="' . $this->tokenGet() . '" />';
+            $html .= '<input type="submit" value="' . $this->word('btn_send') . '" /></div>';
+            $html .= '</form>';
+        }
+        $html .= '</div>';
 
         return $html;
     }
@@ -159,9 +159,9 @@ class FormSimple
     {
         if(empty($message)) return '';
         $msg = '<div class="alert ' . $class . '">';
-		$msg .= $message;
-		$msg .= '</div>';
-		return $msg;
+        $msg .= $message;
+        $msg .= '</div>';
+        return $msg;
     }
 
     /*
@@ -251,8 +251,8 @@ class FormSimple
             }
             elseif(isset($errors))
             {
-				$this->message('form_error_fields');
-			}
+                $this->message('form_error_fields');
+            }
             else // Action
             {
                 // FormSimple is disabled
@@ -268,7 +268,7 @@ class FormSimple
                 // Execute action
                 else
                 {
-					$this->completed(True);
+                    $this->completed(True);
                     $this->action->exec();
                 }
             }
@@ -301,7 +301,7 @@ class FormSimple
 
     /**
      * Return the list of existing actions.
-	 *
+     *
      * @return array
      */
     public static function actionsList()
@@ -330,85 +330,85 @@ class FormSimple
 
     /**
      * Return a traduction of the keyword.
-	 *
-	 * Use form language if defined or language setting if defined or
-	 * language constant FSLANG if defined or english, and call {@link sword()}.
-	 *
+     *
+     * Use form language if defined or language setting if defined or
+     * language constant FSLANG if defined or english, and call {@link sword()}.
+     *
      * @param string $key the keyword
      * @return string the keyword translation
-	 *
-	 * @see sword
+     *
+     * @see sword
      */
     public function word($key)
     {
-		$langs = FormSimple::setting('langs');
+        $langs = FormSimple::setting('langs');
         $this->lang = $langs['selected'];
 
         if(empty($this->lang))
         {
-			if(!defined('FSLANG'))
-			{
-				return $this->sword($key, 'en');
-			}
-			return $this->sword($key, FSLANG);
+            if(!defined('FSLANG'))
+            {
+                return $this->sword($key, 'en');
+            }
+            return $this->sword($key, FSLANG);
         }
         return $this->sword($key, $this->lang);
     }
 
     /**
      * Return a static traduction of the keyword.
-	 *
-	 * If a language is not given the one defined in settings is used,
-	 * and if the language file does not exist, english is used.
-	 * If the keyword does not exist in language file, the given default
-	 * value is returned (formated) or the key itself (formated).
-	 *
+     *
+     * If a language is not given the one defined in settings is used,
+     * and if the language file does not exist, english is used.
+     * If the keyword does not exist in language file, the given default
+     * value is returned (formated) or the key itself (formated).
+     *
      * @param string $key the keyword
      * @param string $lang the language
      * @param string $default return that if the key have no translation
      * @return string the keyword translation
-	 *
-	 * @see word
+     *
+     * @see word
      */
     public static function sword(
-		$key,
-		$lang = Null,
-		$default = Null,
-		$langs_path = FSLANGSPATH
-	){
-		if(empty($key)) return '';
+        $key,
+        $lang = Null,
+        $default = Null,
+        $langs_path = FSLANGSPATH
+    ){
+        if(empty($key)) return '';
 
-		// use setting defined language if not given
+        // use setting defined language if not given
         if($lang === Null)
         {
             $langs = FormSimple::setting('langs');
             $lang = $langs['selected'];
-		}
+        }
 
-		// use english file if translation file does not exist
+        // use english file if translation file does not exist
         $path = $langs_path . $lang . '.php';
         if(!file_exists($path))
-		{
+        {
             $path = $langs_path . 'en.php';
-		}
+        }
 
         global $FormSimple_lang;
         include_once $path;
 
-		// return translation if exists
+        // return translation if exists
         if(isset($FormSimple_lang[$key]))
-		{
+        {
             return $FormSimple_lang[$key];
-		}
+        }
 
-		// return formated default value if exists
-		if($default !== Null)
-		{
+        // return formated default value if exists
+        if($default !== Null)
+        {
             return ucfirst(str_replace('_', ' ', $default));
-		}
+        }
 
-		// finally, return formated key
-		return ucfirst(str_replace('_', ' ', $key));
+        // finally, return formated key
+        return ucfirst(str_replace('_', ' ', $key));
     }
 
     /**
@@ -425,7 +425,7 @@ class FormSimple
     }
     /*
      * Get the token in SESSION.
-	 *
+     *
      * @return string
      */
     private function tokenGet()
@@ -436,7 +436,7 @@ class FormSimple
     }
     /*
      * Compare the POST token to the SESSION one.
-	 *
+     *
      * @return boolean
      */
     private function tokenCompare()
@@ -456,7 +456,7 @@ class FormSimple
     /**
      * Format recursively any value to
      * be securely displayed in a page.
-	 *
+     *
      * @param mixed $data
      * @return mixed data
      */
@@ -507,7 +507,7 @@ class FormSimple
 
     /**
      * Find all tags in string and replace them by forms.
-	 *
+     *
      * @param string $string the string to parse
      * @param string $opening the tag opening character(s), default (%
      * @param string $closing the tag closing character(s), default %)
@@ -545,14 +545,14 @@ class FormSimple
 
     /**
      * Create and setup fields from a list of parameters.
-	 *
+     *
      * @param string $parameters the parameters to parse
      * @param string $separator the separator, a comma by default
-	 * @return boolean the parsing status
+     * @return boolean the parsing status
      */
     public function parseParameters($parameters, $separator = ',')
     {
-		if($parameters === Null) return False;
+        if($parameters === Null) return False;
 
         // assure encoding
         $parameters = str_replace('&nbsp;', ' ', $parameters);
@@ -596,7 +596,7 @@ class FormSimple
                 $id++;
             }
         }
-		return True;
+        return True;
     }
 
     /**
@@ -606,7 +606,7 @@ class FormSimple
 
     /**
      * Return the last version of FormSimple in GS.
-	 *
+     *
      * @return string
      */
     public static function lastVersion()
@@ -614,11 +614,11 @@ class FormSimple
         $apiback = file_get_contents(FSVERSIONURL);
         $response = json_decode($apiback);
         if($response->status == 'successful')
-			return $response->version;
+            return $response->version;
     }
     /**
      * Check if a new version exists.
-	 *
+     *
      * @return mixed new version number if exists, or False.
      */
     public static function existsNewVersion()
@@ -627,13 +627,13 @@ class FormSimple
         $last = FormSimple::lastVersion();
         $last_r = explode('.', $last);
         foreach($actual as $key => $val)
-		{
+        {
             if(isset($last_r[$key]))
             {
                 if($val < $last_r[$key]) return $last;
                 if($val > $last_r[$key]) return False;
             }
-		}
+        }
         return False;
     }
     /**
@@ -643,14 +643,14 @@ class FormSimple
 
     /**
      * Return a setting value from config file.
-	 *
+     *
      * @param string $key the setting key
      * @return mixed the setting value
      */
     public static function setting($key)
     {
-		if(!defined('FSCONFIGPATH'))
-			FormSimple::defineConstants();
+        if(!defined('FSCONFIGPATH'))
+            FormSimple::defineConstants();
 
         global $FormSimple_settings;
         require_once FSCONFIGPATH;
@@ -713,7 +713,7 @@ class FormSimple
     /**
      * Return a configuration form capable to manage the
      * FormSimple settings or a given action settings.
-	 *
+     *
      * @param string $action an action name. FormSimple config by default.
      * @return string the form
      */
@@ -775,7 +775,7 @@ class FormSimple
      * Return a setting edition field.
      *
      * Replace old values in a given config file by new values.
-	 *
+     *
      * @param string $name the config var name
      * @param string $setting the setting name
      * @param mixed $value the setting valuele
@@ -826,7 +826,7 @@ class FormSimple
      * Modify a configuration file.
      *
      * Replace old values in a given config file by new values.
-	 *
+     *
      * @param string $file_path the config file path
      * @param string $name the config var name
      * @param array $old_values the values to change
@@ -911,7 +911,7 @@ class FormSimple
     }
     public function delFields()
     {
-		$this->fields = array();
+        $this->fields = array();
     }
 
 
@@ -928,12 +928,12 @@ class FormSimple
     public function visible($val = Null)
     {
         if($val === Null) return $this->visible;
-		if(is_bool($val)) $this->visible = $val;
+        if(is_bool($val)) $this->visible = $val;
     }
     public function enabled($val = Null)
     {
         if($val === Null) return $this->enabled;
-		if(is_bool($val)) $this->enabled = $val;
+        if(is_bool($val)) $this->enabled = $val;
     }
     public function completed($val = Null)
     {

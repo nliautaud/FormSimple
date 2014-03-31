@@ -43,10 +43,10 @@ add_action('theme-header', 'FormSimple_header');
 function FormSimpleHeader()
 {
     if(FormSimple::setting('use_default_style'))
-	{
-		echo '<link rel="stylesheet" type="text/css" ';
-		echo 'href="plugins/FormSimple/style.css" />';
-	}
+    {
+        echo '<link rel="stylesheet" type="text/css" ';
+        echo 'href="plugins/FormSimple/style.css" />';
+    }
 }
 /*
  * Parse page content to replace all tags by forms.
