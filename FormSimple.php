@@ -473,6 +473,15 @@ class FormSimple
     }
 
     /**
+     * Hides the form 
+     * (used by Actions after successful processing of the form)
+     * @todo implement FormSimple::hide()
+     */
+    public function hide() {
+        // nothing yet
+    }
+
+    /**
      * Check if a given field class exists,
      * optionally after including the class file.
      * @param string $className the field class name
