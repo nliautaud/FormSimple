@@ -584,48 +584,6 @@ class FormSimple
 
 
     /*
-     * VERSION - UPDATE
-     */
-
-
-    /**
-     * Return the last version of FormSimple in GS.
-     *
-     * @return string
-     */
-    public static function lastVersion()
-    {
-        $apiback = file_get_contents(FSVERSIONURL);
-        $response = json_decode($apiback);
-        if ($response->status == 'successful') {
-            return $response->version;
-        }
-    }
-    /**
-     * Check if a new version exists.
-     *
-     * @return mixed new version number if exists, or false.
-     */
-    public static function existsNewVersion()
-    {
-        $actual = explode('.', FormSimple::version());
-        $last = FormSimple::lastVersion();
-        $last_r = explode('.', $last);
-        foreach ($actual as $key => $val) {
-            if (isset($last_r[$key])) {
-                if ($val < $last_r[$key]) {
-                    return $last;
-                }
-                if ($val > $last_r[$key]) {
-                    return false;
-                }
-            }
-        }
-        return false;
-    }
-
-
-    /*
      * CONFIGURATION
      */
 
@@ -666,12 +624,6 @@ class FormSimple
         }
         $head .= '<h2>' . FormSimple::sword('config_title') . '</h2>';
 
-        // Update
-        if ($newversion = FormSimple::existsNewVersion()) {
-            $head .= '<div class="updated">' . FormSimple::sword('update_alert');
-            $head .= '<br /><a href="' . FSDOWNURL . '">';
-            $head .= FormSimple::sword('update_download') . ' (' . $newversion . ')</a></div>';
-        }
         // Links
         $head .= '<p><a href="' . FSDOCURL . '">' . FormSimple::sword('documentation') . '</a>';
         $head .= ' - <a href="' . FSFORUMURL . '">' . FormSimple::sword('forum') . '</a></p>';
