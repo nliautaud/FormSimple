@@ -59,22 +59,24 @@ class FormSimple
      */
     private static function defineConstants()
     {
-        define('FSSERVER',      'http://' . $_SERVER['SERVER_NAME']);
-        define('FSROOT',        $_SERVER['DOCUMENT_ROOT']);
-        define('FSPATH',        dirname(__FILE__) . '/');
-        define('FSRELPATH',     substr(FSPATH, strlen(FSROOT)));
-        define('FSURL',         FSSERVER . FSRELPATH);
+        if(!defined('FSSERVER')) {
+            define('FSSERVER',      'http://' . $_SERVER['SERVER_NAME']);
+            define('FSROOT',        $_SERVER['DOCUMENT_ROOT']);
+            define('FSPATH',        dirname(__FILE__) . '/');
+            define('FSRELPATH',     substr(FSPATH, strlen(FSROOT)));
+            define('FSURL',         FSSERVER . FSRELPATH);
 
-        define('FSACTIONSPATH', FSPATH . 'actions/');
-        define('FSFIELDSPATH',  FSPATH . 'fields/');
-        define('FSLANGSPATH',   FSPATH . 'lang/');
-        define('FSCONFIGPATH',  FSPATH . 'config.php');
+            define('FSACTIONSPATH', FSPATH . 'actions/');
+            define('FSFIELDSPATH',  FSPATH . 'fields/');
+            define('FSLANGSPATH',   FSPATH . 'lang/');
+            define('FSCONFIGPATH',  FSPATH . 'config.php');
 
-        define('FSWEBSITE',     'https://github.com/nliautaud/FormSimple');
-        define('FSDOCURL',      'https://github.com/nliautaud/FormSimple');
-        define('FSDOWNURL',     'https://github.com/nliautaud/FormSimple');
-        define('FSFORUMURL',    'https://github.com/nliautaud/FormSimple');
-        define('FSVERSIONURL',  'https://github.com/nliautaud/FormSimple');
+            define('FSWEBSITE',     'https://github.com/nliautaud/FormSimple');
+            define('FSDOCURL',      'https://github.com/nliautaud/FormSimple');
+            define('FSDOWNURL',     'https://github.com/nliautaud/FormSimple');
+            define('FSFORUMURL',    'https://github.com/nliautaud/FormSimple');
+            define('FSVERSIONURL',  'https://github.com/nliautaud/FormSimple');
+        }
     }
 
     /**
