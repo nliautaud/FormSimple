@@ -10,7 +10,7 @@ abstract class Action
     protected $version;
     protected $form;
 
-    final public function _Construct($form)
+    final public function __construct($form)
     {
         $this->version = '0';
         $this->form = $form;

@@ -9,10 +9,7 @@
  * @author Nicolas Liautaud <contact@nliautaud.fr>
  * @package FormSimple
  */
-/*
- * Define where is FormSimple from GS root (for securimage captcha).
- */
-define('FSPATH', 'plugins/FormSimple/');
+
 /*
  * Define FormSimple global default language according to GS (optionnal).
  */
@@ -39,7 +36,7 @@ add_action('plugins-sidebar', 'createSideMenu', array($thisfile, 'FormSimple'));
 /*
  * Add a link to FormSimple default stylesheet in page header if needed.
  */
-add_action('theme-header', 'FormSimple_header');
+add_action('theme-header', 'FormSimpleHeader');
 function FormSimpleHeader()
 {
     if (FormSimple::setting('use_default_style')) {
