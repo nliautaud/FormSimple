@@ -9,10 +9,7 @@
  * @author Nicolas Liautaud <contact@nliautaud.fr>
  * @package FormSimple
  */
-/*
- * Define where is FormSimple from GS root (for securimage captcha).
- */
-define('FSPATH', 'plugins/FormSimple/');
+
 /*
  * Define FormSimple global default language according to GS (optionnal).
  */
