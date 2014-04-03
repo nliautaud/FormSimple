@@ -39,7 +39,7 @@ add_action('plugins-sidebar', 'createSideMenu', array($thisfile, 'FormSimple'));
 /*
  * Add a link to FormSimple default stylesheet in page header if needed.
  */
-add_action('theme-header', 'FormSimple_header');
+add_action('theme-header', 'FormSimpleHeader');
 function FormSimpleHeader()
 {
     if (FormSimple::setting('use_default_style')) {
