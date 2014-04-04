@@ -14,4 +14,3 @@ $FormSimple_lang = array(
 'fromsite'		=> 'Inviata da',
 'frompage'		=> 'Questa email è stata inviata dalla pagina'
 );
-?>

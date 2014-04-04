@@ -34,27 +34,32 @@ class Sendmail extends Action
     {
         $server = $_SERVER['SERVER_NAME'];
         $uri = $_SERVER['REQUEST_URI'];
-        $askcopy = False;
+        $askcopy = false;
 
         // title
         $html  = '<h2>' . $this->word('fromsite') . ' <i>' . $server . '</i></h2>';
 
         // fields
-		$skip = explode(',', $this->setting('skip_fields'));
-        foreach($this->form->fields() as $field)
-        {
+        $skip = explode(',', $this->setting('skip_fields'));
+        foreach ($this->form->fields() as $field) {
             $type  = $field->type();
             $value = $field->value();
             $title = $field->title();
-			switch($type)
-			{
-				case 'name' : $name = $value; break;
-				case 'email': $email = $value; break;
-				case 'subject': $this->subject = $value; break;
-				case 'askcopy': $askcopy = True; break;
+            switch($type) {
+            case 'name' :
+                $name = $value;
+                break;
+            case 'email':
+                $email = $value;
+                break;
+            case 'subject':
+                $this->subject = $value;
+                break;
+            case 'askcopy':
+                $askcopy = true;
+                break;
             }
-            if(!in_array($type, $skip) && !empty($value))
-            {
+            if (!in_array($type, $skip) && !empty($value)) {
                 // field name
                 $title = !empty($title) ? $title : $type;
                 $html .= '<p><b>' . $this->word($title);
@@ -62,25 +67,24 @@ class Sendmail extends Action
                 $html .= ' :</b> ';
 
                 // field value
-                switch($type)
-                {
-                    case 'message' :
-                    case 'textarea' :
-                        $html .= '<p style="margin:10px;padding:10px;border:1px solid silver">';
-                        $html .= nl2br($value) . '</p>';
-                        break;
-                    case 'website' :
-                        $html .= $this->html_link($value);
-                        break;
-                    case 'checkbox' :
-                    case 'select' :
-                    case 'radio' :
-                        foreach($value as $v)
-                            if(isset($v[2]) && $v[2] == 'selected')
-                                $html .=  $v[1];
-                        break;
-                    default :
-                        $html .= $value;
+                switch($type) {
+                case 'message' :
+                case 'textarea' :
+                    $html .= '<p style="margin:10px;padding:10px;border:1px solid silver">';
+                    $html .= nl2br($value) . '</p>';
+                    break;
+                case 'website' :
+                    $html .= $this->htmlLink($value);
+                    break;
+                case 'checkbox' :
+                case 'select' :
+                case 'radio' :
+                    foreach($value as $v)
+                        if(isset($v[2]) && $v[2] == 'selected')
+                            $html .=  $v[1];
+                    break;
+                default :
+                    $html .= $value;
                 }
                 $html .= '</p>';
             }
@@ -89,20 +93,17 @@ class Sendmail extends Action
         // footer
         $html .= '<p><i>';
         $html .= $this->word('frompage') . ' ';
-        $html .= $this->html_link($server.$uri, $uri);
+        $html .= $this->htmlLink($server.$uri, $uri);
         $html .= '</i></p>';
 
-        if(empty($name))
-        {
+        if (empty($name)) {
             $name = $this->word('anonymous');
         }
-        if(empty($email))
-        {
-            $askcopy = False;
+        if (empty($email)) {
+            $askcopy = false;
             $email = $this->word('anonymous');
         }
-        if(empty($this->subject))
-        {
+        if (empty($this->subject)) {
             $this->subject = $this->word('nosubject');
         }
         $this->subject = '=?utf-8?B?' . base64_encode($this->subject) . '?=';
@@ -121,7 +122,7 @@ class Sendmail extends Action
         $this->body .= "Content-Type: text/plain; charset=UTF-8\n";
         $this->body .= "Content-Transfer-Encoding: 7bit\n";
         $arr = array('`</?p[^>]*>`','`<br ?/>`','`</?h2>`');
-        $this->body .= strip_tags(preg_replace($arr,"\n",$html))."\n";
+        $this->body .= strip_tags(preg_replace($arr, "\n", $html))."\n";
         //html version
         $this->body .= "--$mime_boundary\n";
         $this->body .= "Content-Type: text/html; charset=UTF-8\n";
@@ -129,22 +130,17 @@ class Sendmail extends Action
         $this->body .= $html."\n\n";
         $this->body .= "--$mime_boundary--\n\n";
 
-        $this->targets = $this->get_emails($this->form->params(), $this->setting('default_targets'));
+        $this->targets = $this->getEmails($this->form->params(), $this->setting('default_targets'));
 
-        if(empty($this->targets))
-        {
+        if (empty($this->targets)) {
             $this->error('error_targets');
-        }
-        else
-        {
+        } else {
             // send mail
-            if(mail($this->targets, $this->subject, $this->body, $this->headers))
-            {
-                if($askcopy)
-                {
+            if (mail($this->targets, $this->subject, $this->body, $this->headers)) {
+                if ($askcopy) {
                     mail($email, $this->subject, $this->body, $this->headers);
                 }
-				$this->completed();
+                $this->completed();
             }
             else $this->error('error');
         }
@@ -155,15 +151,15 @@ class Sendmail extends Action
      */
     private function completed()
     {
-		$this->form->message($this->word('completed'));
-		$this->form->hide(True);
+        $this->form->message($this->word('completed'));
+        $this->form->hide(true);
     }
 
     /*
      * Return informations about the action.
      * @return string
      */
-    public function html_debug()
+    public function htmlDebug()
     {
         $output = 'Targets<pre>' . $this->targets . '</pre>';
         $output .= 'Base64 subject<pre>' . $this->subject . '</pre>';
@@ -177,24 +173,25 @@ class Sendmail extends Action
      * @param string|array any number of parameters
      * @return string the emails separated by commas
      */
-    private function get_emails()
+    private function getEmails()
     {
         $email_pattern =
             "`(?:(?:[a-z0-9][-.+_=']?)*[a-z0-9])+" .
             "@(?:(?:[a-z0-9][-._]?){0,62}[a-z0-9])+" .
             "\.[a-z0-9]{2,6}`i";
-		foreach(func_get_args() as $arg)
-		{
-			if(is_array($arg)) $arg = implode($arg, ',');
-			preg_match_all($email_pattern, $arg, $targets);
-			$targets = implode($targets[0], ',');
-			if(!empty($targets))
-			{
-				if(!isset($all_targets)) $all_targets = $targets;
-				else $all_targets .= ',' . $targets;
-			}
-		}
-		return $all_targets;
+        foreach (func_get_args() as $arg) {
+            if (is_array($arg)) {
+                $arg = implode($arg, ',');
+            }
+            preg_match_all($email_pattern, $arg, $targets);
+            $targets = implode($targets[0], ',');
+            if (!empty($targets)) {
+                if (!isset($all_targets)) {
+                    $all_targets = $targets;
+                } else $all_targets .= ',' . $targets;
+            }
+        }
+        return $all_targets;
     }
 
     /*
@@ -204,10 +201,12 @@ class Sendmail extends Action
     * @param string $protocol http:// by default
     * @return string the <a>
     */
-    function html_link($href, $title = False, $protocol = 'http://')
+    function htmlLink($href, $title = false, $protocol = 'http://')
     {
-        if(!$title) $title = $href;
+        if (!$title) {
+            $title = $href;
+        }
         return '<a href="' . $protocol . $href . '">' . $title . '</a>';
     }
 }
-?>
+

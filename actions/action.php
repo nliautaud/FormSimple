@@ -10,7 +10,7 @@ abstract class Action
     protected $version;
     protected $form;
 
-    final public function __construct($form)
+    final public function _Construct($form)
     {
         $this->version = '0';
         $this->form = $form;
@@ -33,11 +33,11 @@ abstract class Action
      * Return informations about the action error.
      * @return string
      */
-    abstract public function html_debug();
+    abstract public function htmlDebug();
 
     final protected function error($keyword)
     {
-        $this->form->completed(False);
+        $this->form->completed(false);
         $this->form->message($this->word($keyword));
     }
 
@@ -63,12 +63,14 @@ abstract class Action
      */
     public function setting($key)
     {
-		$settings = 'FormSimple_' . $this->name() . '_settings';
+        $settings = 'FormSimple_' . $this->name() . '_settings';
         global $$settings;
         require_once FSACTIONSPATH . $this->name() . '/config.php';
-		$s = $$settings;
-        if(isset($s[$key])) return $s[$key];
-		else return Null;
+        $s = $$settings;
+        if (isset($s[$key])) {
+            return $s[$key];
+        }
+        else return null;
     }
 
     /**
@@ -84,9 +86,10 @@ abstract class Action
         global $FormSimple_lang;
 
         $file =  $this->form->lang() . '.php';
-        if(!file_exists($path.$file)) $file = 'en.php';
-        if(file_exists($path.$file))
-        {
+        if (!file_exists($path.$file)) {
+            $file = 'en.php';
+        }
+        if (file_exists($path.$file)) {
             require $path.$file;
 
             if(isset($FormSimple_lang[$key]))
@@ -96,4 +99,4 @@ abstract class Action
         }
     }
 }
-?>
+

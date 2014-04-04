@@ -14,5 +14,5 @@ $FormSimple_lang = array(
 'fromsite'		=> 'Mail verstuurd vanaf',
 'frompage'		=> 'Deze mail is verstuurd vanaf pagina'
 );
-?>
+
 

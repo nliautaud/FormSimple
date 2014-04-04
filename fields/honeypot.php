@@ -6,10 +6,9 @@ class Honeypot extends Text
      * Define if field content is valid
      * @return boolean
      */
-    public function is_valid()
+    public function isValid()
     {
-		if($this->value()) return False;
-		return True;
+        if($this->value()) return false;
+        return true;
     }
 }
-?>

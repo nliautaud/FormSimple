@@ -40,16 +40,14 @@ add_action('plugins-sidebar', 'createSideMenu', array($thisfile, 'FormSimple'));
  * Add a link to FormSimple default stylesheet in page header if needed.
  */
 add_action('theme-header', 'FormSimple_header');
-function FormSimple_header()
+function FormSimpleHeader()
 {
-    if(FormSimple::setting('use_default_style'))
-	{
-		echo '<link rel="stylesheet" type="text/css" ';
-		echo 'href="plugins/FormSimple/style.css" />';
-	}
+    if (FormSimple::setting('use_default_style')) {
+        echo '<link rel="stylesheet" type="text/css" ';
+        echo 'href="plugins/FormSimple/style.css" />';
+    }
 }
 /*
  * Parse page content to replace all tags by forms.
  */
 add_filter('content', 'FormSimple::parse');
-?>

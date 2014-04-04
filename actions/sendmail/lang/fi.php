@@ -14,4 +14,4 @@ $FormSimple_lang = array(
 'fromsite'		=> 'Sähköposti on lähetetty',
 'frompage'		=> 'Tämä sähköposti on lähetetty sivulta'
 );
-?>
+

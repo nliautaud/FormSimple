@@ -14,4 +14,4 @@ $FormSimple_lang = array(
 'fromsite'		=> 'Correo electrónico enviado desde',
 'fromsite'		=> 'Este correo electrónico ha sido enviado desde la página'
 );
-?>
+

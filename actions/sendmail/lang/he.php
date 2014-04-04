@@ -14,4 +14,4 @@ $FormSimple_lang = array(
 'fromsite'		=> 'נשלח מאתר',
 'frompage'		=> 'נשלח מעמוד'
 );
-?>
+

@@ -25,7 +25,7 @@ $FormSimple_lang = array(
 'nosubject'=> '(Sin asunto)',
 'fromsite' => 'Correo electrónico enviado desde',
 'sentfrom' => 'Este correo electrónico ha sido enviado desde la página',
-        
+
 // status messages
 'sent'    => 'Correo electrónico enviado.',
 'error'   => 'Error: mensaje no enviado.',
@@ -51,11 +51,11 @@ $FormSimple_lang = array(
 'config_updated' => 'Sus cambios han sido guardados.',
 
 'config_error_open' =>
-'<b>No se puede abrir el archivo de configuración.</b> 
+'<b>No se puede abrir el archivo de configuración.</b>
 Verifique que el archivo exista y sus permisos:',
 
-'config_error_modify' => 
-'<b>No se puede modificar el archivo de configuración.</b> 
+'config_error_modify' =>
+'<b>No se puede modificar el archivo de configuración.</b>
 Verifique los permisos:',
 
 // New release alert
@@ -97,8 +97,8 @@ Separados por comas.',
 
 'debug'     => 'Modo debug',
 'debug_sub' =>
-'Deshabilitar envío de mensajes, mostrar la estructura de datos de display FormSimple, datos enviados por POST y 
+'Deshabilitar envío de mensajes, mostrar la estructura de datos de display FormSimple, datos enviados por POST y
 el mensaje que debería haber sido enviado.',
 'debug_warn'=> 'No activar en sitios en producción!'
 );
-?>
+

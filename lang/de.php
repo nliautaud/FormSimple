@@ -26,7 +26,7 @@ $FormSimple_lang = array(
 'nosubject'=> '(kein Betreff)',
 'fromsite' => 'Nachricht gesendet von',
 'sentfrom' => 'Diese Nachricht wurde gesendet von der Seite',
-        
+
 // status messages
 'sent'    => 'Nachricht verschickt.',
 'error'   => 'Fehler : Nachricht wurde nicht verschickt.',
@@ -54,11 +54,11 @@ $FormSimple_lang = array(
 'config_updated' => 'Erfolgreich eingestellt.',
 
 'config_error_open' =>
-'<b>Konfigurationsdatei nicht lesbar.</b> 
+'<b>Konfigurationsdatei nicht lesbar.</b>
 Datei eventuell anlegen und Rechte einstellen :',
 
-'config_error_modify' => 
-'<b>Konfigurationsdatei nicht beschreibbar.</b> 
+'config_error_modify' =>
+'<b>Konfigurationsdatei nicht beschreibbar.</b>
 Rechte einstellen :',
 
 // New release alert
@@ -100,8 +100,8 @@ Durch Kommata abgetrennt.',
 
 'debug'     => 'Debugmodus',
 'debug_sub' =>
-'E-Mail versand deaktiveren, Datenstruktur von FormSimple anzeigen, Daten per POST verschickt und 
+'E-Mail versand deaktiveren, Datenstruktur von FormSimple anzeigen, Daten per POST verschickt und
 die E-Mail, die verschickt worden waere.',
 'debug_warn'=> 'Nicht im laufenden Betrieb verwenden!'
 );
-?>
+

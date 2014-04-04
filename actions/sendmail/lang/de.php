@@ -14,4 +14,4 @@ $FormSimple_lang = array(
 'fromsite'		=> 'Nachricht gesendet von',
 'frompage'		=> 'Diese Nachricht wurde gesendet von der Seite',
 );
-?>
+
