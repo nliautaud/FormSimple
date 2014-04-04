@@ -13,7 +13,7 @@ abstract class Field
 
     private $hidden;
     private $locked;
-    final public function _Construct(
+    final public function __construct(
         $id,
         $title = '', $value = '', $placeholder = '',
         $required = false, $hidden = false, $locked = false

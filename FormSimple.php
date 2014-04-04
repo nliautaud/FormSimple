@@ -59,22 +59,24 @@ class FormSimple
      */
     private static function defineConstants()
     {
-        define('FSSERVER',      'http://' . $_SERVER['SERVER_NAME']);
-        define('FSROOT',        $_SERVER['DOCUMENT_ROOT']);
-        define('FSPATH',        dirname(__FILE__) . '/');
-        define('FSRELPATH',     substr(FSPATH, strlen(FSROOT)));
-        define('FSURL',         FSSERVER . FSRELPATH);
+        if(!defined('FSSERVER')) {
+            define('FSSERVER',      'http://' . $_SERVER['SERVER_NAME']);
+            define('FSROOT',        $_SERVER['DOCUMENT_ROOT']);
+            define('FSPATH',        dirname(__FILE__) . '/');
+            define('FSRELPATH',     substr(FSPATH, strlen(FSROOT)));
+            define('FSURL',         FSSERVER . FSRELPATH);
 
-        define('FSACTIONSPATH', FSPATH . 'actions/');
-        define('FSFIELDSPATH',  FSPATH . 'fields/');
-        define('FSLANGSPATH',   FSPATH . 'lang/');
-        define('FSCONFIGPATH',  FSPATH . 'config.php');
+            define('FSACTIONSPATH', FSPATH . 'actions/');
+            define('FSFIELDSPATH',  FSPATH . 'fields/');
+            define('FSLANGSPATH',   FSPATH . 'lang/');
+            define('FSCONFIGPATH',  FSPATH . 'config.php');
 
-        define('FSWEBSITE',     'https://github.com/nliautaud/FormSimple');
-        define('FSDOCURL',      'https://github.com/nliautaud/FormSimple');
-        define('FSDOWNURL',     'https://github.com/nliautaud/FormSimple');
-        define('FSFORUMURL',    'https://github.com/nliautaud/FormSimple');
-        define('FSVERSIONURL',  'https://github.com/nliautaud/FormSimple');
+            define('FSWEBSITE',     'https://github.com/nliautaud/FormSimple');
+            define('FSDOCURL',      'https://github.com/nliautaud/FormSimple');
+            define('FSDOWNURL',     'https://github.com/nliautaud/FormSimple');
+            define('FSFORUMURL',    'https://github.com/nliautaud/FormSimple');
+            define('FSVERSIONURL',  'https://github.com/nliautaud/FormSimple');
+        }
     }
 
     /**
@@ -471,6 +473,15 @@ class FormSimple
     }
 
     /**
+     * Hides the form 
+     * (used by Actions after successful processing of the form)
+     * @todo implement FormSimple::hide()
+     */
+    public function hide() {
+        // nothing yet
+    }
+
+    /**
      * Check if a given field class exists,
      * optionally after including the class file.
      * @param string $className the field class name
@@ -584,48 +595,6 @@ class FormSimple
 
 
     /*
-     * VERSION - UPDATE
-     */
-
-
-    /**
-     * Return the last version of FormSimple in GS.
-     *
-     * @return string
-     */
-    public static function lastVersion()
-    {
-        $apiback = file_get_contents(FSVERSIONURL);
-        $response = json_decode($apiback);
-        if ($response->status == 'successful') {
-            return $response->version;
-        }
-    }
-    /**
-     * Check if a new version exists.
-     *
-     * @return mixed new version number if exists, or false.
-     */
-    public static function existsNewVersion()
-    {
-        $actual = explode('.', FormSimple::version());
-        $last = FormSimple::lastVersion();
-        $last_r = explode('.', $last);
-        foreach ($actual as $key => $val) {
-            if (isset($last_r[$key])) {
-                if ($val < $last_r[$key]) {
-                    return $last;
-                }
-                if ($val > $last_r[$key]) {
-                    return false;
-                }
-            }
-        }
-        return false;
-    }
-
-
-    /*
      * CONFIGURATION
      */
 
@@ -666,12 +635,6 @@ class FormSimple
         }
         $head .= '<h2>' . FormSimple::sword('config_title') . '</h2>';
 
-        // Update
-        if ($newversion = FormSimple::existsNewVersion()) {
-            $head .= '<div class="updated">' . FormSimple::sword('update_alert');
-            $head .= '<br /><a href="' . FSDOWNURL . '">';
-            $head .= FormSimple::sword('update_download') . ' (' . $newversion . ')</a></div>';
-        }
         // Links
         $head .= '<p><a href="' . FSDOCURL . '">' . FormSimple::sword('documentation') . '</a>';
         $head .= ' - <a href="' . FSFORUMURL . '">' . FormSimple::sword('forum') . '</a></p>';
