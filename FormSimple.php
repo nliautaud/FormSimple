@@ -252,7 +252,7 @@ class FormSimple
                 $this->message('form_error_fields');
             } else {
                 // Action
-                if (!FormSimple::setting('enable') && $this->enable) {
+                if (!FormSimple::setting('enable') || !$this->enabled) {
                     // FormSimple is disabled
                     $this->message('form_error_disabled');
                 } elseif ($this->action() == null) {
