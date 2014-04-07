@@ -626,6 +626,19 @@ class FormSimple
     {
         FormSimple::defineConstants();
 
+        if(isset($_GET['translate'])) {
+            require_once FSPATH . '/tools/translator/FormSimpleTranslator.php';
+            FormSimpleTranslator::gui(FSLANG);
+            return;
+        } else {
+            $request_uri = $_SERVER['REQUEST_URI'];
+            if(false === strpos($request_uri, '?')) {
+                $translate_url = $request_uri . '?translate'; 
+            } else {
+                $translate_url = $request_uri . '&translate'; 
+            }
+        }
+        
         $head = '';
         if (!file_exists(FSCONFIGPATH)) {
             $head .= '<div class="error">';
@@ -637,7 +650,8 @@ class FormSimple
 
         // Links
         $head .= '<p><a href="' . FSDOCURL . '">' . FormSimple::sword('documentation') . '</a>';
-        $head .= ' - <a href="' . FSFORUMURL . '">' . FormSimple::sword('forum') . '</a></p>';
+        $head .= ' - <a href="' . FSFORUMURL . '">' . FormSimple::sword('forum') . '</a>';
+        $head .= ' - <a href="' . $translate_url . '">' . FormSimple::sword('translate') . '</a></p>';
 
 
         // Main settings
