@@ -286,6 +286,7 @@ class FormSimple
             require_once($file);
             if(class_exists($class)) {
                 $this->action = new $class($this);
+                return true;
             } else $this->error = 'the action class "'.$class.'" does not exist.';
         } else $this->error = 'the action file "'.$class.'.php" does not exist.';
     }
@@ -528,7 +529,8 @@ class FormSimple
         foreach ($tags as $tag) {
             // create form
             $form = new FormSimple();
-            $form->action($tag[1]);
+            $return = $form->action($tag[1]);
+            if(!$return) continue;
             $form->parseParameters(isset($tag[2]) ? $tag[2] : '');
 
             // check POST
