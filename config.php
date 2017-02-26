@@ -36,6 +36,9 @@ $FormSimple_settings = array(
         )
     ),
 
+    'recaptcha_public_key' => '',
+    'recaptcha_private_key' => '',
+
     'text_field_filter' => '',
     'text_field_filter_type' => array(
         'selected' => 'b',
