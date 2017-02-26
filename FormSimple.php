@@ -658,7 +658,8 @@ class FormSimple
             $toc = FormSimple::sword('table_of_contents') . '<ul>' . $toc . '</ul>';
         }
 
-        echo $head . $toc . $forms;
+        echo '<style>'.file_get_contents(FSPATH . 'config_style.css').'</style>';
+        echo '<div class="FormSimple_config">' . $head . $toc . $forms . '</div>';
     }
 
     /**
@@ -704,9 +705,7 @@ class FormSimple
 
         $html .= '<form action="#' . $action . '" method="post">';
         foreach ($$name as $setting => $value) {
-            $html .= '<div style="margin:10px 0;">';
             $html .= FormSimple::configField($name, $setting, $value);
-            $html .= '</div>';
         }
         $html .= '<input type="submit" class="submit" value="' . FormSimple::sword('btn_save') . '" />';
         $html .= '</form>';
@@ -726,36 +725,34 @@ class FormSimple
      */
     private static function configField($name, $setting, $value)
     {
+        $label = '<div class="label">';
+        $label .= '<strong>' . FormSimple::sword('setting_' . $setting, null, $setting) . '</strong>';
+        $label .= '<em>' . FormSimple::sword('setting_' . $setting . '_sub', null, '') . '</em>';
+        $label .= '</div>';
+
+        $input = '';
         if (is_bool($value)) {
-            $html = '<input type="checkbox" name="' . $name . '[' . $setting . ']" ';
-            $html .= $value ? 'checked="checked" ' : '';
-            $html .= 'style="float:right;" />';
+            $input .= '<input type="checkbox" name="' . $name . '[' . $setting . ']" ';
+            $input .= $value ? 'checked="checked" ' : '';
+            $input .= '/>';
         } elseif (is_string($value)) {
-            $html = '<b>' . FormSimple::sword('setting_' . $setting, null, $setting) . '</b><br />';
-            $html .= '<i>' . FormSimple::sword('setting_' . $setting . '_sub', null, '') . '</i><div>';
-            $html .= '<textarea name="' . $name . '[' . $setting . ']" style="width:100%;height:40px">';
-            $html .= $value . '</textarea>';
+            $input .= '<textarea name="' . $name . '[' . $setting . ']">';
+            $input .= $value . '</textarea>';
         } elseif (is_numeric($value)) {
-            $html = '<input type="text" name="' . $name . '[' . $setting . ']" ';
-            $html .= 'value="' . $value . '" style="float:right;" />';
+            $input .= '<input type="text" class="text" name="' . $name . '[' . $setting . ']" ';
+            $input .= 'value="' . $value . '" />';
         } elseif (is_array($value)) {
-            $html = '<select name="' . $name . '[' . $setting . ']" style="float:right;">';
+            $input .= '<select class="text" name="' . $name . '[' . $setting . ']">';
             foreach ($value['values'] as $key => $val) {
-                $html .= '<option value="' . $key . '" ';
+                $input .= '<option value="' . $key . '" ';
                 if ($value['selected'] == $key) {
-                    $html .= 'selected="selected" ';
+                    $input .= 'selected="selected" ';
                 }
-                $html .= '/>' . $val . '</option>';
+                $input .= '/>' . $val . '</option>';
             }
-            $html .= '</select>';
+            $input .= '</select>';
         }
-        // Title after field because of float:right
-        if (!is_string($value)) {
-            $html .= '<b>' . FormSimple::sword('setting_' . $setting, null, $setting) . '</b><br />';
-            $html .= '<i>' . FormSimple::sword('setting_' . $setting . '_sub', null, '') . '</i><div>';
-        }
-        $html .= '</div>';
-        return $html;
+        return '<label class="field">' . $label . $input . '</label>';
     }
 
     /**

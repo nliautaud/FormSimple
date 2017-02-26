@@ -1,6 +1,6 @@
 Order deny,allow
 Deny from all
 
-<Files "style.css">
+<Files ~ "\.css">
     Allow from all
 </Files>
