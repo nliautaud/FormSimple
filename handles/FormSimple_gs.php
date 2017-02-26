@@ -39,9 +39,8 @@ add_action('plugins-sidebar', 'createSideMenu', array($thisfile, 'FormSimple'));
 add_action('theme-header', 'FormSimpleHeader');
 function FormSimpleHeader()
 {
-    if (FormSimple::setting('use_default_style')) {
-        echo '<link rel="stylesheet" type="text/css" ';
-        echo 'href="plugins/FormSimple/style.css" />';
+    if (FormSimple::setting('style')) {
+        echo '<link rel="stylesheet" type="text/css" href="plugins/FormSimple/style.css" />';
     }
 }
 /*
