@@ -113,7 +113,7 @@ class FormSimple
         // message
         $html .= $this->htmlMessage(
             $this->word($this->message),
-            $this->completed ? 'confirm' : 'error'
+            $this->completed ? 'success' : 'failed'
         );
 
         // form
@@ -160,7 +160,7 @@ class FormSimple
      * Return an html display of a message.
      * @return string the <div>
      */
-    private function htmlMessage($message, $class = 'error')
+    private function htmlMessage($message, $class = 'failed')
     {
         if(empty($message)) return '';
         $msg = '<div class="alert ' . $class . '">';
@@ -474,7 +474,7 @@ class FormSimple
     }
 
     /**
-     * Hides the form 
+     * Hides the form
      * (used by Actions after successful processing of the form)
      * @todo implement FormSimple::hide()
      */
