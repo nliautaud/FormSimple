@@ -1,0 +1,55 @@
+<?php
+
+/**
+ * English language file for the
+ * Translation Tool for FormSimple
+ * @author Francesco Simone Carta <entuland@gmail.com> 
+ */
+
+$FormSimple_lang = array (
+  'key' => 'Key',
+  'reference_language' => 'Reference language',
+  'target_langcode' => 'Target language (code)',
+  'submit' => 'Submit',
+  'new_string' => 'New string',
+  'new_key' => 'New key',
+  'tools' => 'Tools',
+  'actions' => 'Actions',
+  'save_failed' => 'Save failed!',
+  'main_interface' => 'Main interface',
+  'strings' => 'Strings',
+  'language_bg' => 'Bulgarian',
+  'language_it' => 'Italian',
+  'language_en' => 'English',
+  'language_es' => 'Spanish',
+  'language_he' => 'Hebrew',
+  'language_fr' => 'French',
+  'language_nl' => 'Dutch',
+  'language_de' => 'German',
+  'language_pl' => 'Polish',
+  'language_fi' => 'Finnish',
+  'language_lt' => 'Lithuanian',
+  'language_pt' => 'Portuguese',
+  'language_sv' => 'Swedish',
+  'language_ru' => 'Russian',
+  'new_language' => 'New language',
+  'translate' => 'Translate',
+  'target_language' => 'Target language',
+  'context' => 'Context',
+  'context_choice' => 'Context choice',
+  'back_to' => 'Back to',
+  'formsimple_settings' => 'FormSimple settings',
+  'cancel' => 'Cancel',
+  'or' => 'or',
+  'rollback_success' => 'Rollback successful!',
+  'rollback_current' => 'Rollback target',
+  'rollback_backup' => 'Rollback source',
+  'rollback_backup_not_file' => 'Rollback source is missing or not a file!',
+  'rollback_backup_reading_failure' => 'Failure reading rollback sourcefile content!',
+  'save_success' => 'Save successful!',
+  'rollback' => 'Rollback',
+  'provide_langcode' => 'Please provide a language code!',
+  'context_page_title' => 'Choose translation context',
+  'edit_page_title' => 'Edit language strings',
+  'current_context' => 'Current context',
+);

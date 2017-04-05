@@ -4,7 +4,7 @@
  * @author Vaidotas Kazla
  * @package SimpleForm
  */
-$SimpleForm_lang = array(
+$FormSimple_lang = array(
 'nosubject'		=> '(be temos)',
 'anonymous'		=> 'Anonimas',
 'error_mail'	=> 'Klaida: nepavyko išsiųsti žinutės.',
